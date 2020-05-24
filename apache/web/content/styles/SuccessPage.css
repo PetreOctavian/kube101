@@ -1,0 +1,215 @@
+body{
+	margin: 0;
+	padding: 0;
+	background: url(../images/b5.jpg);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	font-family: sans-serif;
+}
+
+
+
+@media only screen and (max-height: 500px){
+	body {
+		margin: 0;
+		padding: 0;
+		background: url(../images/b5.jpg);
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		font-family: sans-serif;
+	}
+}
+
+.loginbox{	
+	width: 500px;
+	height: auto;
+	background: black;
+	color: white;
+	top: 50%;
+	left: 50%;
+	position: absolute;
+	transform: translate(-50%, -50%);
+	border-radius: 15px;
+	opacity: 0.85;
+	border-style: none;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	padding: 45px 30px;
+	box-sizing: border-box;
+}
+
+@media only screen and (max-width: 600px ) {
+	.loginbox{	
+		width: 350px;
+		height: 500px;
+		background: black;
+		color: white;
+		top: 50%;
+		left: 50%;
+		position: absolute;
+		transform: translate(-50%, -50%);
+		border-radius: 15px;
+		opacity: 0.85;
+		border-style: none;
+		font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+		padding: 45px 30px;
+		box-sizing: border-box;
+	}
+
+}
+
+@media only screen and (max-width: 600px ) {
+	h1 {font-size: 1em}}
+
+
+@media only screen and (max-width: 600px ) {
+	.avatar{
+		transform: scale(0.9);
+	}
+}
+
+
+.avatar{
+	width: 80px;
+	height: 80px;
+	top: -25px;
+	left: -25px;
+	left: calc(20% -50px);
+	border-radius: 50%;
+	position: absolute;
+	border: solid black;
+	border-style: solid; 
+}
+
+
+h1{
+	margin: 5px;
+	padding: 5px 0 20px ;
+	text-align: center;
+	font-size: 18px;
+	font-family: inherit;
+}
+
+
+
+.buton {
+	background-color:white;
+	border: none;
+	color:black;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 22px;
+	margin: 8px;
+	padding: 4px;
+	-webkit-transition-duration: 0.4s; /* Safari */
+	transition-duration: 0.4s;
+	cursor: pointer;
+	border: 2px solid #F48220;
+	border-radius: 5px;
+  }
+
+  
+  .buton:hover{
+	  background-color: #F48220;
+	  color: white;
+  }
+
+.buton:focus{
+	outline: none;
+}
+
+/*.loginbox input{ 
+	width: 95%;
+	height: 25%;
+	border-radius: 20px;
+	font-family: inherit;
+}
+
+
+.loginbox input[type="text"], input[type="password"]{
+	
+	border: 1px solid orange;
+	height: 30px;
+	padding-left: 10px;
+	font-size: 16px;
+	border-radius: 20px;
+	margin-bottom: 10px;
+	
+}
+
+
+.loginbox input[type="submit"]{	
+	height: 30px;
+	width: 90%;
+	margin-top: 20px;
+	background: white;
+	color: black;
+	font-size: 16px;
+	border-radius: 15;
+	font-family: inherit;
+	border: 1px solid orange;
+	margin-bottom: 5px;
+}
+
+.loginbox input[type="submit"]:hover{
+	cursor: pointer;
+	background: orange;
+	color: white;	
+}
+
+
+.loginbox input[type="reset"]{	
+	height: 30px;
+	width: 90%;
+	margin-top: 5px;
+	background: white;
+	color: black;
+	font-size: 16px;
+	border-radius: 15;
+	font-family: inherit;
+	border: 1px solid red;
+	margin-bottom: 20px;
+}
+
+.loginbox input[type="reset"]:hover{
+	cursor: pointer;
+	background: red;
+	color: white;	
+}
+
+.clearfix::after {
+	content: "";
+	clear: both;
+	display: table;
+}
+
+
+
+.loginbox a{
+	text-decoration: none;
+	font-size: 12px;
+	line-height: 20px;
+	color: darkgrey;
+	margin: 10;
+}
+
+.loginbox p{
+	text-decoration: none;
+	font-size: 12px;
+	line-height: 20px;
+	color: darkgrey;
+	margin: 10;
+}
+
+.loginbox a:hover{
+	color: orange;
+}
+
+input:focus {
+	outline:none;
+}
+*/

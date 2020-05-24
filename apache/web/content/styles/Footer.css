@@ -1,0 +1,171 @@
+/*Generals*/
+ul {
+	list-style-type: none;
+}
+
+a{
+	text-decoration: none;
+}
+
+
+/*Footer*/
+
+.page-footer{
+	background-color: #73CAE5;
+	border-radius: 5px;
+
+}
+
+.page-footer a, .news a{
+	color: black;
+}
+
+
+.footer-copyright{
+	background-color: rgb(67,115,127);
+	border-radius: 5px;
+}
+
+
+/*Keep Conected*/
+
+.fa {
+	padding: 20px;
+	font-size: 30px;
+	width: 50px;
+	height: 50px;
+	margin: 5px;
+	border-radius: 50%;
+}
+
+.fball:hover .fa-facebook{
+	border-radius: 5%;
+}
+
+.twall:hover .fa-twitter{
+	border-radius: 5%;
+}
+
+.ytall:hover .fa-youtube{
+	border-radius: 5%;
+}
+
+.isall:hover .fa-instagram{
+	border-radius: 5%;
+}
+
+.fa-facebook {
+	background: #3B5998;
+	color: white; 
+}
+
+.fa-twitter {
+	background: #55ACEE;
+	color: white;
+}
+
+.fa-youtube {
+	background: #bb0000;
+	color: white;
+}
+
+.fa-instagram {
+	background: #125688;
+	color: white;
+}
+
+/*Subscribe to our newsletter*/
+
+
+.newsletterbox input{ 
+	width: 95%;
+	height: 25%;
+	border-radius: 15px;
+	font-family: inherit;
+}
+
+
+.newsletterbox input[type="text"]{
+	
+	border: 1px solid #F48221;
+	height: 30px;
+	padding-left: 10px;
+	font-size: 16px;
+	border-radius: 15px;
+	margin-bottom: 10px;
+	
+}
+
+
+.newsletterbox input[type="submit"]{	
+	height: 30px;
+	width: 95%;
+	margin-top: 15px;
+	background: white;
+	color: black;
+	font-size: 16px;
+	border-radius: 15px;
+	font-family: inherit;
+	border: 1px solid #F48221;
+    margin-bottom: 10px;
+    
+}
+
+.newsletterbox input[type="submit"]:hover{
+	cursor: pointer;
+	background: #F48221;
+	color: white;	
+}
+
+.newsletterbox input[type="top"]{	
+	height: 40px;
+	width: 40%;
+	
+	background: white;
+	color: black;
+	font-size: 16px;
+	border-radius: 15px;
+	font-family: inherit;
+	border: 1px solid red;
+    
+    margin-top:15px;
+    text-align: center;
+}
+
+.newsletterbox input[type="top"]:hover{
+	cursor: pointer;
+	background: red;
+	color: white;	
+}
+
+input:focus {
+	outline:none;
+}
+
+.buton {
+	background-color:white;
+	border: none;
+	color:black;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 15px;
+    margin-top: 20px;
+    margin-left: 30px;
+	-webkit-transition-duration: 0.4s; /* Safari */
+	transition-duration: 0.4s;
+	cursor: pointer;
+	border: 1px solid #F48220;
+	border-radius: 15px;
+  }
+
+  
+  .buton:hover{
+	  background-color: #F48220;
+	  color: white;
+  }
+
+.buton:focus{
+	outline: none;
+}
+

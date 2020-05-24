@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: srv-ap
+spec:
+  selector:
+    app: AP
+  type: NodePort
+  ports:
+    - targetPort: 80
+      port: 80
+      nodePort: 30008
+
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-ap
+  labels:
+    app: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: AP
+  template:
+    metadata:
+      labels:
+        app: AP
+    spec:
+      containers:
+      - name: web-container
+        image: petreocty1998/octav_rep:webster
+        ports:
+        - containerPort: 80
+        env:
+          - name: MYSQL_HOST
+            valueFrom:
+              configMapKeyRef:
+               name: ap-configmap
+               key: MYSQL_HOST
+          - name: MYSQL_USER
+            valueFrom:
+              configMapKeyRef:
+               name: ap-configmap
+               key: MYSQL_USER
+          - name: MYSQL_PASS
+            valueFrom:
+              configMapKeyRef:
+               name: ap-configmap
+               key: MYSQL_PASS
+          - name: MYSQL_DB
+            valueFrom:
+              configMapKeyRef:
+               name: ap-configmap
+               key: MYSQL_DB

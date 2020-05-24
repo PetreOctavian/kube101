@@ -1,0 +1,126 @@
+body{
+	background-color: white;
+	margin: 0;
+	padding: 0;
+	background: url(../images/b5.jpg);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	font-family: sans-serif;
+}
+
+
+
+.navbar-collapse.collapse.in {
+	display: block!important;
+}
+
+
+.navbar .collapse li a:hover{
+	background-color: #F48221;
+	border-radius: 5px;
+}
+
+a:hover{
+	cursor: pointer;
+}
+
+.navbar{
+	border-bottom: #F48221 solid 3px;
+	position: relative;
+}
+
+.logo_img{
+	width: 40px;
+	border-radius: 50%;
+	
+}
+
+
+#gallery {
+  width: 1000px;
+  margin: 0 auto;
+  padding-top: 10px;
+  text-align: center;
+  border: 1px solid #555;
+}
+
+.test{
+  margin: 20px;
+  height: 280px;
+  width: 300px;
+  border-radius: 10px black;
+}
+
+@media all and (max-width:960px) {
+  #gallery {
+    width: 900px;
+   }        
+}
+@media all and (max-width:720px) {
+   #gallery {
+     width: 660px;
+   }
+}
+@media all and (max-width:480px) {
+  #gallery {
+    width: 420px;
+  }
+}
+
+
+
+
+div.gallery {
+  margin: 5px;
+  border: 5px solid #ccc;
+  float: left;
+  width: 180px;
+  border-radius: 5px;
+}
+
+div.gallery:hover {
+  border: 5px solid #777;
+}
+
+div.gallery img {
+  width: 100%;
+  height: auto;
+}
+
+div.desc {
+  text-align: center;
+  background-color: #ccc;
+  display: block;
+  font-size: 14px;
+  margin: 5px;
+  border-radius: 5px;
+  
+}
+
+.desc{
+  margin-top:15px;
+  margin-bottom: 15px;
+}
+
+.btn_search{
+  width: 90%;
+  margin-left: 8px;
+  text-align: center;
+  display: block;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+div.desc:hover{
+	background-color: #777;
+	color:white;
+	cursor: context-menu;
+	}
+
+
+.conatiner{
+	color: white;
+}
+
