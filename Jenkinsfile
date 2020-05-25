@@ -18,8 +18,8 @@ pipeline {
                 steps {
                     echo 'Starting to build docker image DB'
                     script {
-                        def DB = docker.build("my-image:${env.BUILD_ID}","-f ${/mysql/dockerfile .")
-                        def WEB = docker.build("my-image:${env.BUILD_ID}","-f ${/apache/dockerfile .") 
+                        def DB = docker.build("my-image:${env.BUILD_ID}","-f /mysql/dockerfile .")
+                        def WEB = docker.build("my-image:${env.BUILD_ID}","-f /apache/dockerfile .") 
                         
                     }
                 }
