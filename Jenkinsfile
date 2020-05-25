@@ -14,12 +14,6 @@ pipeline {
         git 'https://github.com/PetreOctavian/kube101.git'
       }
     }
-    stage('Initialize'){
-      steps{
-        def dockerHome = tool 'myDocker'
-        env.PATH = "${dockerHome}/bin:${env.PATH}"
-      }
-    }
     stage('Build docker image') {
       steps {
         echo 'Starting to build docker image DB'
