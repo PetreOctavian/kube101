@@ -1,46 +1,39 @@
 pipeline {
 
   environment {
-    registry = "192.168.1.81:5000/justme/myweb"
+    registry = "petreocty1998/octav_rep"
+    registryCredential = 'dockerhub'
     dockerImage = ""
   }
 
   agent any
 
   stages {
-
-    stage('Checkout Source') {
+  	stage('Clone repository') {
       steps {
-        git 'https://github.com/justmeandopensource/playjenkins.git'
+        git 'https://github.com/PetreOctavian/kube101.git'
       }
     }
-
-    stage('Build image') {
+    stage('Build docker image') {
+                steps {
+                    echo 'Starting to build docker image DB'
+                    script {
+                        def DB = docker.build("my-image:${env.BUILD_ID}","-f ${env.WORKSPACE}/mysql/dockerfile .")
+                        def WEB = docker.build("my-image:${env.BUILD_ID}","-f ${env.WORKSPACE}/apache/dockerfile .") 
+                        
+                    }
+                }
+    }
+    stage('Push docker image') {
       steps{
         script {
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+        	docker.withRegistry( '', registryCredential ) {
+        		DB.push('dbster')
+            	WEB.push('webster')
+        	}
         }
       }
     }
-
-    stage('Push Image') {
-      steps{
-        script {
-          docker.withRegistry( "" ) {
-            dockerImage.push()
-          }
-        }
-      }
-    }
-
-    stage('Deploy App') {
-      steps {
-        script {
-          kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig")
-        }
-      }
-    }
-
   }
 
 }
