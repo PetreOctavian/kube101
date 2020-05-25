@@ -14,15 +14,18 @@ pipeline {
         git 'https://github.com/PetreOctavian/kube101.git'
       }
     }
+    stage('Initialize'){
+        def dockerHome = tool 'myDocker'
+        env.PATH = "${dockerHome}/bin:${env.PATH}"
+    }
     stage('Build docker image') {
-                steps {
-                    echo 'Starting to build docker image DB'
-                    script {
-                        def DB = docker.build("my-image:${env.BUILD_ID}","mysql")
-                        def WEB = docker.build("my-image:${env.BUILD_ID}","apache") 
-                        
-                    }
-                }
+      steps {
+        echo 'Starting to build docker image DB'
+          script {
+            def DB = docker.build("my-image:${env.BUILD_ID}","mysql")
+            def WEB = docker.build("my-image:${env.BUILD_ID}","apache")          
+          }
+      }
     }
     stage('Push docker image') {
       steps{
