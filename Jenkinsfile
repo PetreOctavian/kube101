@@ -1,8 +1,3 @@
-
-
-
-
-
 pipeline {
 
   environment {
@@ -30,9 +25,8 @@ pipeline {
         sh "kubectl cluster-info"
       }
     }
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    stage('Build docker image') {
+
+    /*stage('Build docker image') {
       steps {
         echo 'Starting to build docker image DB'
           script {
@@ -40,27 +34,8 @@ pipeline {
             def WEB = docker.build("my-image:${env.BUILD_ID}","apache")          
           }
       }
-    }
-=======
-=======
->>>>>>> Stashed changes
- 
-    /*stage('Build docker image') {
-                steps {
-                    echo 'Starting to build docker image DB'
-                    script {
-                        def DB = docker.build("my-image:${env.BUILD_ID}","-f mysql/dockerfile .")
-                        def WEB = docker.build("my-image:${env.BUILD_ID}","-f apache/dockerfile .") 
-                        
-                    }
-                }
     }*/
 
-
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     stage('Push docker image') {
         agent {
           docker { image 'jenkinsci/jnlp-slave' }
@@ -70,9 +45,9 @@ pipeline {
             def DB = docker.build("my-image:${env.BUILD_ID}","-f mysql/dockerfile .")
             def WEB = docker.build("my-image:${env.BUILD_ID}","-f apache/dockerfile .")
             docker.withRegistry( '', registryCredential ) {
-        	  DB.push('dbster')
+              DB.push('dbster')
               WEB.push('webster')
-        	}
+            }
           }
         }
     }
