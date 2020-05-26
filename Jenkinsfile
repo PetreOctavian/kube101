@@ -1,6 +1,6 @@
 pipeline{
 
-	enviroment{
+	environment{
 		registry = "petreocty1998/octav_rep"
 		registryCredential = "dockerhub"
 	}
@@ -8,9 +8,11 @@ pipeline{
 	agent any
 
 	stages{
-
 		stage("stage0"){
-			git 'https://github.com/PetreOctavian/kube101.git'
+			steps{
+				git 'https://github.com/PetreOctavian/kube101.git'
+			}
 		}
 	}
+	
 }
