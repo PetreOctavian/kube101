@@ -15,18 +15,5 @@ pipeline {
       }
     }
 
- 
-    stage('Push docker image') {
-        agent { label 'slave-pod'}
-        steps{
-          script {
-            def DB = docker.build("my-image:${env.BUILD_ID}","-f mysql/dockerfile .")
-            def WEB = docker.build("my-image:${env.BUILD_ID}","-f apache/dockerfile .")
-            docker.withRegistry( '', registryCredential ) {
-              DB.push('dbster')
-              WEB.push('webster')
-            }
-          }
-        }
-    }
+
 }
