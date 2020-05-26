@@ -11,7 +11,7 @@ pipeline{
     		booleanParam (name: 'DEPLOY_TO_PROD', defaultValue: false,     description: 'If build and tests are good, proceed and deploy to production without manual approval')
    	}
 
-	agent { label 'slave-pod' }
+	agent { label 'jenslave' }
 
 	stages{
 		stage("stage0"){
