@@ -2,7 +2,7 @@ pipeline{
 
 	environment{
 		registry = "petreocty1998/octav_rep"
-		registryCredential = "dockerhub"
+		registryCredential = "dockerhub2"
 		DEPLOY_PROD = false
 	}
 	
