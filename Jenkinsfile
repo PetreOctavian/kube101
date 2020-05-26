@@ -31,6 +31,7 @@ pipeline {
       }
     }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     stage('Build docker image') {
       steps {
         echo 'Starting to build docker image DB'
@@ -41,6 +42,8 @@ pipeline {
       }
     }
 =======
+=======
+>>>>>>> Stashed changes
  
     /*stage('Build docker image') {
                 steps {
@@ -54,6 +57,9 @@ pipeline {
     }*/
 
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     stage('Push docker image') {
         agent {
