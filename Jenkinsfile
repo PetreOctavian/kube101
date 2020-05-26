@@ -19,8 +19,7 @@ pipeline{
 				git 'https://github.com/PetreOctavian/kube101.git'
 			}
 		}
-	}
-	stage('Push docker image') {
+		stage('Push docker image') {
 		steps{
 		  	script {
 			    def DB = docker.build("my-image:${env.BUILD_ID}","-f mysql/dockerfile .")
@@ -28,9 +27,11 @@ pipeline{
 			    docker.withRegistry( '', registryCredential ) {
 			      DB.push('dbster')
 			      WEB.push('webster')
-		    	}
-		  }
-        }
-    }
+		    		}
+		      }
+        	}
+	}
+	
+    
 	
 }
