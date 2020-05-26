@@ -1,4 +1,4 @@
-ipeline{
+pipeline{
 
 	environment{
 		registry = "petreocty1998/octav_rep"
@@ -15,9 +15,7 @@ ipeline{
 
 	stages{
 		stage("stage0"){
-			steps{
-				git 'https://github.com/PetreOctavian/kube101.git'
-			}
+			git 'https://github.com/PetreOctavian/kube101.git'
 		}
 		stage('Push docker image') {
 			steps{
