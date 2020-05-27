@@ -16,7 +16,7 @@ pipeline {
     stage('Push docker image') {
         steps{
           script {
-              echo "workspace directory is ${env.WORKSPACE}"
+              echo "workspace directory is ${env.WORKSPACE}/mysql/dockerfile"
               echo "build URL is ${env.BUILD_URL}"
               docker.withRegistry( 'https://registry.hub.docker.com/', registryCredential ) {
               def DB = docker.build("my-image:${env.BUILD_ID}","-f ${env.WORKSPACE}/mysql/dockerfile .")
