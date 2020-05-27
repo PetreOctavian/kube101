@@ -1,23 +1,31 @@
 pipeline {
 
+  environment {
+    registry = "petreocty1998/octav_rep"
+    registryCredential = 'dockerhub'
+  }
+
   agent any
 
   stages {
-
-    stage('Checkout Source') {
+  	stage('Git clone and setup') {
       steps {
-        git url:'https://github.com/PetreOctavian/kube101.git', branch:'master'
+        git clone 'https://github.com/PetreOctavian/kube101.git'
       }
     }
 
-    stage('Deploy App') {
-      steps {
-        script {
-          kubernetesDeploy(configs: "core/a.yaml", kubeconfigId: "mykubeconfig")
+ 
+    stage('Push docker image') {
+        steps{
+          script {
+            
+            docker.withRegistry( 'https://registry.hub.docker.com/', registryCredential ) {
+              def DB = docker.build("my-image:${env.BUILD_ID}","-f mysql/dockerfile .")
+              def WEB = docker.build("my-image:${env.BUILD_ID}","-f apache/dockerfile .")
+              DB.push('dbster')
+              WEB.push('webster')
+            }
+          }
         }
-      }
     }
-
-  }
-
 }
