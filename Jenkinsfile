@@ -5,7 +5,7 @@ pipeline {
     registryCredential = 'dockerhub'
   }
 
-  agent any
+  agent { label 'docker' }
 
   stages {
   	stage('Git clone and setup') {
@@ -15,7 +15,6 @@ pipeline {
     }
     stage('Push docker image') {
         steps{
-          agent { label 'docker' }
           script {
               echo "workspace directory is ${env.WORKSPACE}/mysql/dockerfile"
               echo "build URL is ${env.BUILD_URL}"
