@@ -5,7 +5,7 @@ pipeline {
     registryCredential = 'dockerhub'
   }
 
-  agent { label 'docker' }
+  agent any
 
   stages {
   	stage('Git clone and setup') {
