@@ -18,8 +18,14 @@ pipeline {
           script {
               echo "workspace directory is ${env.WORKSPACE}/mysql/dockerfile"
               echo "build URL is ${env.BUILD_URL}"
-              def DB = docker.build("my-image:${env.BUILD_ID}","-f ./mysql/dockerfile .")
-              def WEB = docker.build("my-image:${env.BUILD_ID}","-f ./apache/dockerfile .")
+	      dir("mysql") {
+       	      	def DB = docker.build("my-image:${env.BUILD_ID}","-f dockerfile .")
+	      }
+              dir("apache"){
+              	def WEB = docker.build("my-image:${env.BUILD_ID}","-f dockerfile .")
+	      }
+              
+
               docker.withRegistry( '', registryCredential ) {
                 DB.push('dbster')
                 WEB.push('webster')
