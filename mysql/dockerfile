@@ -1,6 +1,6 @@
 FROM mysql
 
-COPY ${env.WORKSPACE}/planetickets.sql /docker-entrypoint-initdb.d/
+ADD ${env.WORKSPACE}/mysql/planetickets.sql /docker-entrypoint-initdb.d/
 
 
 
