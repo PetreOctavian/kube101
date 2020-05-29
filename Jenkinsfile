@@ -19,7 +19,7 @@ pipeline {
               echo "workspace directory is ${env.WORKSPACE}/mysql/dockerfile"
               echo "build URL is ${env.BUILD_URL}"
               def DB = docker.build("my-image:${env.BUILD_ID}","-f ./mysql/dockerfile .")
-              def WEB = docker.build("my-image:${env.BUILD_ID}","-f ${env.WORKSPACE}/apache/dockerfile .")
+              def WEB = docker.build("my-image:${env.BUILD_ID}","-f ./apache/dockerfile .")
               docker.withRegistry( '', registryCredential ) {
                 DB.push('dbster')
                 WEB.push('webster')
