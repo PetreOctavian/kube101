@@ -54,9 +54,9 @@ pipeline {
 		stage('Deploying to K8s'){
 			steps{
 				script{
-					withKubeConfig([credentialsId:kubeconfig]){
-					sh 'kubectl get pod'
-					}
+					withKubeConfig([credentialsId: 'kubeconfig', serverUrl: 'https://192.168.99.100:8443']) {
+      					sh 'kubectl config view'
+    					}
 				}
 			}
 		}
