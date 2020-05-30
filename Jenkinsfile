@@ -51,7 +51,7 @@ pipeline {
 		}
 		stage('Deploying to K8s'){
 			steps{
-				withKubeConfig([credentialsID:kubeconfig]){
+				withKubeConfig([credentialsId:kubeconfig]){
 				sh 'kubectl get pod'
 				}
 			}
