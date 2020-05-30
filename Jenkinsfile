@@ -30,13 +30,14 @@ pipeline {
 			}
 		}
 		stage('Testing image'){
-			DB.inside {
-            			sh 'echo "Tests DB passed"'
-        		}
-			WEB.inside {
-            			sh 'echo "Tests WEB passed"'
-        		}
-			
+			steps{
+				DB.inside {
+            				sh 'echo "Tests DB passed"'
+        			}
+				WEB.inside {
+					sh 'echo "Tests WEB passed"'
+				}
+			}	
 		}
 		stage('Pushing image'){
 			steps{
