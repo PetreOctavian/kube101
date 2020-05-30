@@ -5,7 +5,7 @@ pipeline {
     		registryCredential = 'dockerhub'
 		DB = ''
 		WEB = ''
-		A = ''
+		Ab = ''
   	}
 
   	agent any
