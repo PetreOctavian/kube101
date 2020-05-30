@@ -18,17 +18,18 @@ pipeline {
           script {
               echo "workspace directory is ${env.WORKSPACE}/mysql/dockerfile"
               echo "build URL is ${env.BUILD_URL}"
-	      dir("mysql") {
+	      /*dir("mysql") {
        	      	def DB = docker.build("my-image:${env.BUILD_ID}","-f ./dockerfile .")
 	      }
               dir("apache"){
               	def WEB = docker.build("my-image:${env.BUILD_ID}","-f ./dockerfile .")
-	      }
+	      }*/
               
 
               docker.withRegistry( '', registryCredential ) {
-                DB.push('dbster')
-                WEB.push('webster')
+		echo "sa moara dusmanii"
+                //DB.push('dbster')
+               // WEB.push('webster')
               }
           }
         }
