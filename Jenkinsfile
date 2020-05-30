@@ -19,10 +19,10 @@ pipeline {
               echo "workspace directory is ${env.WORKSPACE}/mysql/dockerfile"
               echo "build URL is ${env.BUILD_URL}"
 	      dir("mysql") {
-       	      	def DB = docker.build("my-image:${env.BUILD_ID}","-f dockerfile .")
+       	      	def DB = docker.build("my-image:${env.BUILD_ID}","-f ./dockerfile .")
 	      }
               dir("apache"){
-              	def WEB = docker.build("my-image:${env.BUILD_ID}","-f dockerfile .")
+              	def WEB = docker.build("my-image:${env.BUILD_ID}","-f ./dockerfile .")
 	      }
               
 
