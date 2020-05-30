@@ -21,7 +21,7 @@ pipeline {
               				//echo "workspace directory is ${env.WORKSPACE}/mysql/dockerfile"
               				//echo "build URL is ${env.BUILD_URL}"
 	      				dir("mysql") {
-						DB = docker.build("${env.registry}:dbster .")
+						DB = docker.build("${env.registry}:dbster")
 	      				}
               				dir("apache"){
               					WEB = docker.build("${env.registry}:webster","-f dockerfile .")
