@@ -5,6 +5,7 @@ pipeline {
     		registryCredential = 'dockerhub'
 		DB = ''
 		WEB = ''
+		repoName = 'petreocty1998/octav_rep'
   	}
 
   	agent any
@@ -21,10 +22,10 @@ pipeline {
               				//echo "workspace directory is ${env.WORKSPACE}/mysql/dockerfile"
               				//echo "build URL is ${env.BUILD_URL}"
 	      				dir("mysql") {
-       	      					DB = docker.build("my-image:${env.BUILD_ID}","-f ./dockerfile .")
+						DB = docker.build("${env.repoName}:${env.BUILD_ID}","-f ./dockerfile .")
 	      				}
               				dir("apache"){
-              					WEB = docker.build("my-image:${env.BUILD_ID}","-f ./dockerfile .")
+              					WEB = docker.build("${env.repoName}:${env.BUILD_ID}","-f ./dockerfile .")
 	      				}
 				}
 			}
