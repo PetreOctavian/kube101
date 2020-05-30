@@ -21,10 +21,10 @@ pipeline {
               				//echo "workspace directory is ${env.WORKSPACE}/mysql/dockerfile"
               				//echo "build URL is ${env.BUILD_URL}"
 	      				dir("mysql") {
-						DB = docker.build("${env.registry}:${env.BUILD_ID}","-f ./dockerfile .")
+						DB = docker.build("${env.registry}:dbster .")
 	      				}
               				dir("apache"){
-              					WEB = docker.build("${env.registry}:${env.BUILD_ID}","-f ./dockerfile .")
+              					WEB = docker.build("${env.registry}:webster","-f dockerfile .")
 	      				}
 				}
 			}
@@ -33,7 +33,7 @@ pipeline {
 			steps{
 				script{
 					DB.inside {
-            				sh 'echo "Tests DB passed"'
+            					sh 'echo "Tests DB passed"'
 					}
 					WEB.inside {
 						sh 'echo "Tests WEB passed"'
@@ -45,8 +45,8 @@ pipeline {
 			steps{
 				script{	
               				docker.withRegistry( '', registryCredential ) {
-                				DB.push('dbster')
-               					WEB.push('webster')
+                				DB.push()
+               					WEB.push()
               				}
 				}
 			}
