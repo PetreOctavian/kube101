@@ -31,11 +31,13 @@ pipeline {
 		}
 		stage('Testing image'){
 			steps{
-				DB.inside {
+				script{
+					DB.inside {
             				sh 'echo "Tests DB passed"'
-        			}
-				WEB.inside {
-					sh 'echo "Tests WEB passed"'
+					}
+					WEB.inside {
+						sh 'echo "Tests WEB passed"'
+					}
 				}
 			}	
 		}
@@ -51,8 +53,10 @@ pipeline {
 		}
 		stage('Deploying to K8s'){
 			steps{
-				withKubeConfig([credentialsId:kubeconfig]){
-				sh 'kubectl get pod'
+				script{
+					withKubeConfig([credentialsId:kubeconfig]){
+					sh 'kubectl get pod'
+					}
 				}
 			}
 		}
