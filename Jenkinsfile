@@ -55,6 +55,9 @@ pipeline {
 		stage('Deploying to K8s'){
 			steps{
 				script{
+					sh 'curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl \ 
+						&& chmod +x ./kubectl \ 
+						&& mv ./kubectl /usr/local/bin/kubectl'
 					withKubeConfig([credentialsId: 'kubeconfig', serverUrl: 'https://192.168.99.100:8443']) {
       					sh 'kubectl config view'
     					}
