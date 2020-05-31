@@ -71,12 +71,22 @@ pipeline {
 					sh 'chmod +x ./kubectl' 
 					sh 'mv ./kubectl /usr/local/bin/kubectl'
 					withKubeConfig([credentialsId: 'kubeconfig', serverUrl: 'https://192.168.99.100:8443']) {
-      					sh 'kubectl config view'
+      						sh 'kubectl config view'
+						dir("K_support") {
+							sh 'kubectl create -f  azure_secrets.yaml -n ${namespace}'
+							sh 'kubectl create -f  azurestorages.yaml -n ${namespace}'
+							sh 'kubectl create -f  configmaps.yaml -n ${namespace}'
+	      					}
+						dir("K_core") {
+							sh 'kubectl create -f  aphp.yaml -n ${namespace}'
+							sh 'kubectl create -f  db.yaml -n ${namespace}'
+							sh 'kubectl create -f  a.yaml -n ${namespace}'
+	      					}
     					}
 				}
 			}
 		}
-		stage('Deploy to dev'){
+		/*stage('Deploy to dev'){
 			steps{
 				script{
 					namespace = 'development'
@@ -97,7 +107,7 @@ pipeline {
 					}
 				}
 			}
-		}
+		}*/
 	}
               
 }
