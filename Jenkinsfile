@@ -77,7 +77,6 @@ pipeline {
 			}
 		}
 		stage('Deploy to dev'){
-			
 			steps{
 				script{
 					namespace = 'development'
