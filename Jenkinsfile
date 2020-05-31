@@ -1,3 +1,15 @@
+def createNamespace (namespace) {
+    echo "Creating namespace ${namespace}"
+
+    sh "[ ! -z \"\$(kubectl get ns ${namespace} -o name 2>/dev/null)\" ] || kubectl create ns ${namespace}"
+}
+
+def deleteNamespace (namespace) {
+    echo "Deleating namespace ${namespace} if needed"
+
+    sh "[ ! -z \"\$(kubectl get ns ${namespace} -o name 2>/dev/null)\" ] || kubectl delete ns ${namespace}"
+}
+
 pipeline {
 
 	environment {
@@ -52,7 +64,7 @@ pipeline {
 				}
 			}
 		}
-		stage('Deploying to K8s'){
+		stage('Prepare K8s'){
 			steps{
 				script{
 					sh 'curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl' 
@@ -61,6 +73,29 @@ pipeline {
 					withKubeConfig([credentialsId: 'kubeconfig', serverUrl: 'https://192.168.99.100:8443']) {
       					sh 'kubectl config view'
     					}
+				}
+			}
+		}
+		stage('Deploy to dev'){
+			
+			steps{
+				script{
+					namespace = 'development'
+                    			echo "Deploying application ${ID} to ${namespace} namespace"
+                    			createNamespace (namespace)
+              				withKubeConfig([credentialsId: 'kubeconfig', serverUrl: 'https://192.168.99.100:8443']) {
+						dir("K_support") {
+							sh 'kubectl create -f  azure_secrets.yaml -n ${namespace}'
+							sh 'kubectl create -f  azurestorages.yaml -n ${namespace}'
+							sh 'kubectl create -f  configmaps.yaml -n ${namespace}'
+	      					}
+						dir("K_core") {
+							sh 'kubectl create -f  aphp.yaml -n ${namespace}'
+							sh 'kubectl create -f  db.yaml -n ${namespace}'
+							sh 'kubectl create -f  a.yaml -n ${namespace}'
+	      					}
+						sh 'kubectl get pod -n ${namespace}'
+					}
 				}
 			}
 		}
