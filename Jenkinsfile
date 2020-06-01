@@ -28,7 +28,7 @@ pipeline {
             			git 'https://github.com/PetreOctavian/kube101.git'
       			}
     		}
-    		stage('Building image') {
+    		/*stage('Building image') {
         		steps{
           			script {
               				//echo "workspace directory is ${env.WORKSPACE}/mysql/dockerfile"
@@ -63,13 +63,13 @@ pipeline {
               				}
 				}
 			}
-		}
+		}*/
 		stage('Prepare K8s'){
 			steps{
 				script{
-					sh 'curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl' 
+					/*sh 'curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl' 
 					sh 'chmod +x ./kubectl' 
-					sh 'mv ./kubectl /usr/local/bin/kubectl'
+					sh 'mv ./kubectl /usr/local/bin/kubectl'*/
 					withKubeConfig([credentialsId: 'kubeconfig', serverUrl: 'https://192.168.99.100:8443']) {
       						sh 'kubectl config view'
 						dir("K_support") {
