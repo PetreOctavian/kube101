@@ -73,8 +73,8 @@ pipeline {
 					withKubeConfig([credentialsId: 'kubeconfig', serverUrl: 'https://192.168.99.100:8443']) {
       						sh 'kubectl config view'
 						dir("K_support") {
-							sh 'kubectl create -f  azure_secrets.yaml'
-							sh 'kubectl create -f  azurestorages.yaml'
+							//sh 'kubectl create -f  azure_secrets.yaml'
+							//sh 'kubectl create -f  azurestorages.yaml'
 							sh 'kubectl create -f  configmaps.yaml'
 	      					}
 						dir("K_core") {
