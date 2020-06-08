@@ -1,7 +1,7 @@
 def createNamespace (namespace) {
     echo "Creating namespace1 ${namespace}"
 
-    sh "kubectl create ns ${namespace} --ignore-not-found"
+    sh "kubectl create ns ${namespace"
 }
 
 def deleteNamespace (namespace) {
