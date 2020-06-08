@@ -42,11 +42,8 @@ pipeline {
 		stage('Testing image'){
 			steps{
 				script{
-					/*DB.inside {
-            					sh 'echo "Tests DB passed"'
-					}*/
 					WEB.inside {
-						sh 'ls /app/public'
+						sh "ls /app/public"
 					}
 				}
 			}	
@@ -55,7 +52,6 @@ pipeline {
 			steps{
 				script{	
               				docker.withRegistry( '', registryCredential ) {
-                				//DB.push()
                					WEB.push()
               				}
 				}
