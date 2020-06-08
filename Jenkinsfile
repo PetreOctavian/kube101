@@ -79,13 +79,6 @@ pipeline {
     		stage('Building image') {
         		steps{
           			script {
-              				
-	      				/*dir("D_mysql") {
-						DB = docker.build("${env.registry}:dbster")
-	      				}
-              				dir("D_apache"){
-              					WEB = docker.build("${env.registry}:webster","-f dockerfile .")
-	      				}*/
 					WEB = docker.build("${env.registry}:webimage")
 				}
 			}
