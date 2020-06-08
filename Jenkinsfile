@@ -7,7 +7,7 @@ def createNamespace (namespace) {
 def deleteNamespace (namespace) {
     echo "Deleating namespace ${namespace} if needed"
 
-    sh "[ ! -z \"\$(kubectl get ns ${namespace} -o name 2>/dev/null)\" ] || kubectl delete ns ${namespace}"
+    sh "kubectl delete ns ${namespace} --ignore-not-found"
 }
 
 pipeline {
@@ -64,7 +64,9 @@ pipeline {
 		stage('Deploy to dev'){
 			steps{
 				script{
+					
 					namespace = 'development'
+					deleteNamespace (namespace)
                     			echo "Deploying application to ${namespace} namespace"
                     			createNamespace (namespace)
 					dir("K8s") {
