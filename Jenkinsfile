@@ -10,7 +10,7 @@ def deleteNamespace (namespace) {
     sh "kubectl delete ns ${namespace} --ignore-not-found"
 }
 
-def deleteNamespaceContent (namespace)_{
+def deleteNamespaceContent (namespace) {
 	sh "kubectl delete all --all -n ${namespace} --ignore-not-found"
 }
 
