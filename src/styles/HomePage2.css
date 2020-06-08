@@ -1,0 +1,338 @@
+body{
+	/*background-image: url(../images/3pl.jpg);*/
+	background-size: cover;
+	margin: 0;
+	padding: 0;
+	font-family: 'Viga', sans-serif;
+}
+
+.logo_img{
+	width: 40px;
+	border-radius: 50%;
+	
+}
+
+.wingfree{
+	background-color:#73CAE5
+}
+
+/*.navbar{
+	border-bottom: #f0ad4e solid 3px;
+	position: relative;
+}
+
+
+.navbar li:hover{
+	background-color: #f0ad4e;
+	color: red;
+	border-radius: 5px;
+	position: relative;
+	color: black;
+	
+}*/
+
+.navbar-collapse.collapse.in {
+	display: block!important;
+}
+
+
+.navbar .collapse li a:hover{
+	background-color: #F48221;
+	border-radius: 5px;
+
+}
+
+.navbar{
+	border-bottom: #F48221 solid 3px;
+	position: relative;
+}
+
+
+/*.rc  .jumbotron{
+	background-image: url(../images/anim.gif);
+	background-size: cover;
+	
+}*/
+
+
+
+
+.news{
+	background-color: #73CAE5;
+	border-radius: 5px;
+}
+
+.springtime{
+	background-color: #73CAE5;
+	border-radius: 5px;
+	z-index:10;
+}
+
+.jumbotron .springtime img{
+	border-radius: 5%;
+}
+
+
+.text-block {   /*media-q pt asta display:none*/
+	position: absolute;
+	bottom: 0%;
+	left:10%;
+	background-color: red;
+	opacity: 0.6;
+	color: white;
+	border-radius: 5px;
+	margin: auto;
+	height: 25px;
+}
+
+@media only screen and (max-width: 1000px ) {
+	.text-block{
+		display: none;
+	}
+}
+
+.thumbnail img{
+	width: 50%;
+	height: 50%;
+	border-radius: 50%;
+
+}
+
+
+
+.thumbnail a{
+	text-decoration: underline;
+}
+
+.stamp{
+	width: 100px;
+	height: 100px;
+	top: 25%;
+	left: 13%;
+	border-radius: 50%;
+	position: absolute;
+	border: solid black; 
+	transform: scale(0.6);
+	opacity: 0;
+	transition: all 1.5s;
+
+}
+
+
+@media only screen and (max-width: 800px ) {
+	.stamp{
+
+		top: 15%;
+		left: 10%;
+		width: 70px;
+		height: 70px;
+
+	}
+}
+
+
+#a:hover ~ #b {
+	transform: scale(0.5);
+	opacity: 1;
+	transition:all 2s ease-out;	
+}
+
+.car-img{
+	width: 100% ;
+	height: 100%;
+	border-style: solid #292b2c 3px;
+	border-radius: 25px;
+	opacity: 1;
+	transform: scale(0.8);
+	position: relative;
+	
+}
+
+.car-img:hover{
+	
+	transform:scale(0.61)  rotate(-15deg);
+	transition: all 1s ease-out;	
+}
+
+
+ul {
+	list-style-type: none;
+}
+
+a{
+	text-decoration: none;
+}
+
+.carousel-control-prev-icon:hover{
+	cursor: pointer;
+
+}
+
+.carousel-control-next-icon:hover{
+	cursor: pointer;
+
+}
+
+/*Footer*/
+
+.page-footer{
+	background-color: #73CAE5;
+	border-radius: 5px;
+
+}
+
+.page-footer a, .news a{
+	color: black;
+}
+
+
+.footer-copyright{
+	background-color: rgb(67,115,127);
+	border-radius: 5px;
+}
+
+
+/*Keep Conected*/
+
+.fa {
+	padding: 20px;
+	font-size: 30px;
+	width: 50px;
+	height: 50px;
+	margin: 5px;
+	border-radius: 50%;
+}
+
+.fball:hover .fa-facebook{
+	border-radius: 5%;
+}
+
+.twall:hover .fa-twitter{
+	border-radius: 5%;
+}
+
+.ytall:hover .fa-youtube{
+	border-radius: 5%;
+}
+
+.isall:hover .fa-instagram{
+	border-radius: 5%;
+}
+
+.fa-facebook {
+	background: #3B5998;
+	color: white; 
+}
+
+.fa-twitter {
+	background: #55ACEE;
+	color: white;
+}
+
+.fa-youtube {
+	background: #bb0000;
+	color: white;
+}
+
+.fa-instagram {
+	background: #125688;
+	color: white;
+}
+
+
+
+
+.spring_advert{
+	margin:0;
+	padding: 0;
+	/*background-color:#73CAE5;*/
+	border-radius: 5px;
+	background-image: url(../images/ADV.png);
+	
+}
+
+.image-card {
+	position: relative;
+
+
+
+}
+
+.image-card img {
+	-webkit-transition: 0.4s ease;
+	transition: 0.4s ease;
+	display: block;
+	border-radius: 5px;
+}
+
+.zoom-effect-container {
+	position: relative;
+	width: auto;/*1500 500 10*/
+	height:auto;
+	overflow: hidden;
+	background-color: #73CAE5;
+	border-radius: 5px;
+}
+
+
+.zoom-effect-container:hover .image-card img {
+	-webkit-transform: scale(1.04);
+	transform: scale(1.04);
+	opacity: 0.7
+}
+
+.section{
+	height: 50%;
+	width: 100%;
+}
+
+.bok input[type="text"],[type="date"]{
+	
+	height: 40px;
+	padding-left: 10px;
+	font-size: 16px;
+	border-radius: 20px;
+	margin-bottom: 15px;
+	width: 300px;
+	
+}
+
+.bok .form-control
+{
+	height: 40px;
+	padding-left: 10px;
+	font-size: 16px;
+	border-radius: 20px;
+	margin-bottom: 15px;
+	
+}
+
+.bok .search-btn {
+	color: #fff;
+	background-color:#F48221;
+	font-weight: 400;
+	height: 50px;
+	font-size: 14px;
+	border: none;
+	width: 100%;
+	border-radius: 40px;
+	text-transform: uppercase;
+	float: right;
+	margin-top: 20px;
+	margin-left: 20px;
+}
+
+.clear-btn {
+	color: #fff;
+	background-color:red;
+	font-weight: 400;
+	height: 50px;
+	font-size: 14px;
+	border: none;
+	width: 100%;
+	border-radius: 40px;
+	text-transform: uppercase;
+	float: right;
+	margin-top: 20px;
+	margin-left: 20px;
+}

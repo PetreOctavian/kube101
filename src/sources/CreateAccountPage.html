@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>CreateAccountPage</title>
+	<link rel="stylesheet" type="text/css" href="../styles/CreateAccountPage.css">
+	<script src="../scripts/CreateAccountPage.js"></script>
+	<script src="../phps/CreateAccountPage.php"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+	<div class="loginbox">
+		<p>
+			<a onclick="window.location.href='HomePage2.php'" target=_self >
+				<img src="../images/avatar2.png"  class="avatar">
+			</a>
+			<h1>Sign up here</h1>
+			<center>
+				<form  action="../phps/CreateAccountPage.php" method="POST" onsubmit="validare();"> 
+
+					<input type="text" placeholder="Enter Username(*)" name="user" required>
+					<input type="password" placeholder="Enter Password(*)" name="pass" required>
+					<input type="password" placeholder="Repeat Password(*)" name="repass"required>
+					<input type="text" placeholder="Enter Email(*) " name="email" required>
+					<input type="text" placeholder="Enter First name(*)" name="fname" required>
+					<input type="text" placeholder="Enter Last name(*)" name="lname" required>
+					<input type="text" placeholder="Enter Address" name="add">
+					<input type="text" placeholder="Enter Telephone number" name="tel">					
+					<input type="submit" value="Sign up">
+					<input type="reset" value="Cancel">
+
+					<p>Already have an account? <a href="LoginPage.html">Sign in</a>.</p>
+				</form>
+			</center>
+	</div>
+
+</body>
+
+
+</html>
