@@ -1,7 +1,7 @@
 def createNamespace (namespace) {
     echo "Creating namespace ${namespace}"
 
-    sh "[ ! -z \"\$(kubectl get ns ${namespace} -o name 2>/dev/null)\" ] || kubectl create ns ${namespace}"
+    sh "kubectl create ns ${namespace}"
 }
 
 def deleteNamespace (namespace) {
