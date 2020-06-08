@@ -65,7 +65,7 @@ pipeline {
 					deleteNamespace (namespace)
                     			echo "Deploying application to ${namespace} namespace"
                     			createNamespace (namespace)
-					dir("K8s") {
+					dir("k8s") {
 						sh "kubectl apply -f  db.yaml --namespace ${namespace}"
 						sh "kubectl apply -f  web.yaml --namespace ${namespace}"
 	      				}
