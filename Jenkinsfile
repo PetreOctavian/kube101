@@ -43,7 +43,7 @@ def curlTest (namespace, out) {
         // Get deployment's service IP
         def svc_ip = sh (
                 returnStdout: true,
-                script: "kubectl get svc -n ${namespace} | grep web | awk '{print $3}'"
+                script: "kubectl get svc -n ${namespace} | grep web | awk '{print "\$3"}'"
         )
 
         if (svc_ip.equals('')) {
