@@ -65,13 +65,11 @@ pipeline {
 			steps{
 				script{
 					namespace = 'development'
-                    			echo "Deploying application to ${namespace} namespace !"
+                    			echo "Deploying application to ${namespace} namespace"
                     			createNamespace (namespace)
-					//withKubeConfig([credentialsId: 'kubeconfig']) {
-      					sh 'kubectl config view'
 					dir("K8s") {
-						sh 'kubectl apply -f  db.yaml --namespace ${namespace}'
-						sh 'kubectl apply -f  web.yaml --namespace ${namespace}'
+						sh "kubectl apply -f  db.yaml --namespace ${namespace}"
+						sh "kubectl apply -f  web.yaml --namespace ${namespace}"
 	      				}
 				}
 			}
