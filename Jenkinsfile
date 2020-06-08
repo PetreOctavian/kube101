@@ -1,13 +1,17 @@
 def createNamespace (namespace) {
     echo "Creating namespace1 ${namespace}"
 
-    sh "kubectl create ns ${namespace}"
+    sh "kubectl create ns ${namespace} --ignore-not-found"
 }
 
 def deleteNamespace (namespace) {
     echo "Deleating namespace ${namespace} if needed"
 
     sh "kubectl delete ns ${namespace} --ignore-not-found"
+}
+
+def deleteNamespaceContent (namespace)_{
+	sh "kubectl delete all --all -n ${namespace} --ignore-not-found"
 }
 
 /*
@@ -106,6 +110,7 @@ pipeline {
 				script{
 					
 					namespace = 'development'
+					deleteNamespaceContent (namespace)
 					deleteNamespace (namespace)
                     			echo "Deploying application to ${namespace} namespace"
                     			createNamespace (namespace)
