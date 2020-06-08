@@ -15,9 +15,6 @@ pipeline {
 	environment {
     		registry = "petreocty1998/octav_rep"
     		registryCredential = 'dockerhub'
-		DB = ''
-		WEB = ''
-		Ass = ''
   	}
 
   	agent any
@@ -28,28 +25,28 @@ pipeline {
             			git 'https://github.com/PetreOctavian/kube101.git'
       			}
     		}
-    		/*stage('Building image') {
+    		stage('Building image') {
         		steps{
           			script {
-              				//echo "workspace directory is ${env.WORKSPACE}/mysql/dockerfile"
-              				//echo "build URL is ${env.BUILD_URL}"
-	      				dir("D_mysql") {
+              				
+	      				/*dir("D_mysql") {
 						DB = docker.build("${env.registry}:dbster")
 	      				}
               				dir("D_apache"){
               					WEB = docker.build("${env.registry}:webster","-f dockerfile .")
-	      				}
+	      				}*/
+					WEB = docker.build("${env.registry}:webimage")
 				}
 			}
 		}
 		stage('Testing image'){
 			steps{
 				script{
-					DB.inside {
+					/*DB.inside {
             					sh 'echo "Tests DB passed"'
-					}
+					}*/
 					WEB.inside {
-						sh 'echo "Tests WEB passed"'
+						sh 'ls /app/public'
 					}
 				}
 			}	
@@ -58,29 +55,26 @@ pipeline {
 			steps{
 				script{	
               				docker.withRegistry( '', registryCredential ) {
-                				DB.push()
+                				//DB.push()
                					WEB.push()
               				}
 				}
 			}
 		}*/
-		stage('Prepare K8s'){
+		stage('Deploy to dev'){
 			steps{
 				script{
+					namespace = 'development'
+                    			echo "Deploying application ${ID} to ${namespace} namespace"
+                    			createNamespace (namespace)
 					/*sh 'curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl' 
 					sh 'chmod +x ./kubectl' 
 					sh 'mv ./kubectl /usr/local/bin/kubectl'*/
-					withKubeConfig([credentialsId: 'kubeconfig', serverUrl: 'https://192.168.99.100:8443']) {
+					withKubeConfig([credentialsId: 'kubeconfig']) {
       						sh 'kubectl config view'
-						dir("K_support") {
-							sh 'kubectl apply -f  azure_secrets.yaml'
-							sh 'kubectl apply -f  azurestorages.yaml'
-							sh 'kubectl apply -f  configmaps.yaml'
-	      					}
-						dir("K_core") {
-							sh 'kubectl apply -f  aphp.yaml'
-							sh 'kubectl apply -f  db.yaml'
-							sh 'kubectl apply -f  a.yaml'
+						dir("K8s") {
+							sh 'kubectl apply -f  db.yaml --namespace ${namespace}'
+							sh 'kubectl apply -f  web.yaml --namespace ${namespace}'
 	      					}
     					}
 				}
