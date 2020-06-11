@@ -1,0 +1,23 @@
+#imagine sursă
+FROM repository:image
+	
+#cel care se ocupă de imagine	
+MAINTAINER name email
+
+#setarea variabilelor mediului
+ENV key value
+
+#instalare aplicații,copiere și descărcare de date	
+RUN/ADD/COPY commands
+
+#rularea de comenzi in terminalul containerului
+CMD command params[]
+
+#expunere porturi
+EXPOSE port1, port2
+
+#calea spre aplicație	
+ENTRYPOINT /path/to/app
+
+#volum de date	
+VOLUME /path/to/data/volume
