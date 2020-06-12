@@ -1,5 +1,5 @@
 def createNamespace (namespace) {
-    echo "lCreating namespace1 ${namespace}"
+    echo "Creating namespace1 ${namespace}"
 
 	sh "kubectl create ns ${namespace}"
 }
@@ -114,7 +114,7 @@ pipeline {
 					deleteNamespace (namespace)
                     			echo "Deploying application to ${namespace} namespace"
                     			createNamespace (namespace)
-					withKubeConfig([credentialsId: 'kubeconfig']) {
+					withKubeConfig([]) {
 						sh "kubectl config view"
 						sh "kubectl patch serviceaccount default -p \"{\\\"imagePullSecrets\\\": [{\\\"name\\\": \\\"dh-secret\\\"}]}\" --namespace ${namespace}"
 						dir("k8s") {
