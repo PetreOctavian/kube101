@@ -114,7 +114,7 @@ pipeline {
 					deleteNamespace (namespace)
                     			echo "Deploying application to ${namespace} namespace"
                     			createNamespace (namespace)
-					withKubeConfig([credentialsId: 'kube']) {
+					withKubeConfig([credentialsId: 'kubeconfig']) {
 						sh "kubectl config view"
 						sh "kubectl patch serviceaccount default -p \"{\\\"imagePullSecrets\\\": [{\\\"name\\\": \\\"dh-secret\\\"}]}\" --namespace ${namespace}"
 						dir("k8s") {
