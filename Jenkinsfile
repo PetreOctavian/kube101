@@ -114,12 +114,14 @@ pipeline {
 					deleteNamespace (namespace)
                     			echo "Deploying application to ${namespace} namespace"
                     			createNamespace (namespace)
-					sh "minikube service list"
-					sh "kubectl patch serviceaccount default -p \"{\\\"imagePullSecrets\\\": [{\\\"name\\\": \\\"dh-secret\\\"}]}\" --namespace ${namespace}"
-					dir("k8s") {
-						sh "kubectl apply -f  db.yaml --namespace ${namespace}"
-						sh "kubectl apply -f  web.yaml --namespace ${namespace}"
-	      				}
+					withKubeConfig([credentialsId: 'kubeconfig') {
+						sh "minikube service list"
+						sh "kubectl patch serviceaccount default -p \"{\\\"imagePullSecrets\\\": [{\\\"name\\\": \\\"dh-secret\\\"}]}\" --namespace ${namespace}"
+						dir("k8s") {
+							sh "kubectl apply -f  db.yaml --namespace ${namespace}"
+							sh "kubectl apply -f  web.yaml --namespace ${namespace}"
+						}
+					}
 				}
 			}
 		}
