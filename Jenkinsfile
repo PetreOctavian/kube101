@@ -45,9 +45,10 @@ def curlTest (namespace, out) {
         }
 
         // Get deployment's service IP
-        def svc_ip = sh (
+        def svc_port = sh (
                 returnStdout: true,
-                script: "kubectl get svc -n ${namespace} | grep web | awk '{print \$3}'"
+                script: "kubectl get svc -n ${namespace}  | awk '{print \$5}' | grep -iPo '(?<=:).*(?=/)'"
+		
         )
 
         if (svc_ip.equals('')) {
@@ -55,8 +56,8 @@ def curlTest (namespace, out) {
             sh 'exit 1'
         }
 
-        echo "svc_ip is ${svc_ip}"
-        url = 'http://' + svc_ip
+        echo "svc_port is ${svc_port}"
+        url = clusterURL + ':' + svc_port
 
         curlRun (url, out)
     }
@@ -70,6 +71,7 @@ pipeline {
 	environment {
     		registry = "petreocty1998/octav_rep"
     		registryCredential = 'dockerhub'
+		clusterURL = "https://192.168.99.103"
   	}
 
   	agent any
@@ -114,13 +116,10 @@ pipeline {
 					deleteNamespace (namespace)
                     			echo "Deploying application to ${namespace} namespace"
                     			createNamespace (namespace)
-					withKubeConfig() {
-						sh "kubectl config view"
-						sh "kubectl patch serviceaccount default -p \"{\\\"imagePullSecrets\\\": [{\\\"name\\\": \\\"dh-secret\\\"}]}\" --namespace ${namespace}"
-						dir("k8s") {
-							sh "kubectl apply -f  db.yaml --namespace ${namespace}"
-							sh "kubectl apply -f  web.yaml --namespace ${namespace}"
-						}
+					sh "kubectl patch serviceaccount default -p \"{\\\"imagePullSecrets\\\": [{\\\"name\\\": \\\"dh-secret\\\"}]}\" --namespace ${namespace}"
+					dir("k8s") {
+						sh "kubectl apply -f  db.yaml --namespace ${namespace}"
+						sh "kubectl apply -f  web.yaml --namespace ${namespace}"
 					}
 				}
 			}
