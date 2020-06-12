@@ -114,7 +114,7 @@ pipeline {
 					deleteNamespace (namespace)
                     			echo "Deploying application to ${namespace} namespace"
                     			createNamespace (namespace)
-					sh "kubectl patch serviceaccount default \"\"--\" "
+					sh "kubectl patch serviceaccount default ---\\\"---"
 					dir("k8s") {
 						sh "kubectl apply -f  db.yaml --namespace ${namespace}"
 						sh "kubectl apply -f  web.yaml --namespace ${namespace}"
