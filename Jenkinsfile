@@ -27,7 +27,7 @@ def curlRun (url, out) {
         echo "Getting ${out}"
             def result = sh (
                 returnStdout: true,
-                script: "curl --output /dev/null --silent --connect-timeout 5 --max-time 5 --retry 5 --retry-delay 5 --retry-max-time 30 --write-out \"%{${out}}\" ${url}:30008"
+                script: "curl --output /dev/null --silent --connect-timeout 5 --max-time 5 --retry 5 --retry-delay 5 --retry-max-time 30 --write-out \"%{${out}}\" ${url}"
         )
         echo "Result (${out}): ${result}"
     }
