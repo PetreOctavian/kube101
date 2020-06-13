@@ -11,7 +11,7 @@ def deleteNamespace (namespace) {
 }
 
 def deleteNamespaceContent (namespace) {
-	sh "kubectl delete all --all -n ${namespace} --ignore-not-found"
+	sh "kubectl delete all --all -n ${namespace}"
 }
 
 /*
@@ -82,7 +82,7 @@ pipeline {
             			git 'https://github.com/PetreOctavian/kube101.git'
       			}
     		}
-    		/*stage('Building image') {
+    		stage('Building image') {
         		steps{
           			script {
 					WEB = docker.build("${env.registry}:webimage")
@@ -106,7 +106,7 @@ pipeline {
               				}
 				}
 			}
-		}*/
+		}
 		stage('Deploy to dev'){
 			steps{
 				script{
