@@ -112,14 +112,16 @@ pipeline {
 				script{
 					
 					namespace = 'development'
-					deleteNamespaceContent (namespace)
-					deleteNamespace (namespace)
-                    			echo "Deploying application to ${namespace} namespace"
-                    			createNamespace (namespace)
-					sh "kubectl patch serviceaccount default -p \"{\\\"imagePullSecrets\\\": [{\\\"name\\\": \\\"dh-secret\\\"}]}\" --namespace ${namespace}"
-					dir("k8s") {
-						sh "kubectl apply -f  db.yaml --namespace ${namespace}"
-						sh "kubectl apply -f  web.yaml --namespace ${namespace}"
+					withKubeConfig([credentialsId: 'kubeconfig', serverUrl: 'https://192.168.99.103:8443']) {
+						deleteNamespaceContent (namespace)
+						deleteNamespace (namespace)
+						echo "Deploying application to ${namespace} namespace"
+						createNamespace (namespace)
+						sh "kubectl patch serviceaccount default -p \"{\\\"imagePullSecrets\\\": [{\\\"name\\\": \\\"dh-secret\\\"}]}\" --namespace ${namespace}"
+						dir("k8s") {
+							sh "kubectl apply -f  db.yaml --namespace ${namespace}"
+							sh "kubectl apply -f  web.yaml --namespace ${namespace}"
+						}
 					}
 				}
 			}
