@@ -77,12 +77,12 @@ pipeline {
   	agent any
 
   	stages {
-  		/*stage('Cloning our Git') {
+  		stage('Cloning our Git') {
       			steps {
             			git 'https://github.com/PetreOctavian/kube101.git'
       			}
     		}
-    		stage('Building image') {
+    		/*stage('Building image') {
         		steps{
           			script {
 					WEB = docker.build("${env.registry}:webimage")
