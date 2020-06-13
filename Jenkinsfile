@@ -47,11 +47,11 @@ def curlTest (namespace, out) {
         // Get deployment's service IP
         def svc_port = sh (
                 returnStdout: true,
-                script: "kubectl get svc -n ${namespace}  | awk '{print \$5}' | grep -iPo '(?<=:).*(?=/)'"
+                script: "kubectl get svc -n ${namespace}  | awk \'{print \$5}\' | grep -iPo \'(?<=:).*(?=/)\'"
 		
         )
 
-        if (svc_ip.equals('')) {
+        if (svc_port.equals('')) {
             echo "ERROR: Getting service IP failed"
             sh 'exit 1'
         }
