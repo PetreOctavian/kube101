@@ -67,8 +67,8 @@ pipeline {
 	environment {
     		registry = "petreocty1998/octav_rep"
     		registryCredential = 'dockerhub'
-		clusterURL = "https://192.168.99.100:8443"
-		clusterIP = "192.168.99.100"
+		clusterURL = "https://172.17.0.3:8443"
+		clusterIP = "172.17.0.3"
   	}
 
   	agent any
@@ -109,7 +109,7 @@ pipeline {
 				script{
 					
 					namespace = 'development'
-					withKubeConfig([credentialsId: 'kubeconfig', serverUrl: 'https://192.168.99.100:8443']) {
+					withKubeConfig([credentialsId: 'kubeconfig', serverUrl: clusterURL]) {
 						deleteNamespaceContent (namespace)
 						deleteNamespace (namespace)
 						echo "Deploying application to ${namespace} namespace"
