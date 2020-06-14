@@ -1,13 +1,11 @@
 def createNamespace (namespace) {
-    echo "12Creating namespace1 ${namespace}"
-
+	echo "Creating namespace1 ${namespace}"
 	sh "kubectl create ns ${namespace}"
 }
 
 def deleteNamespace (namespace) {
-    echo "Deleating namespace ${namespace} if needed"
-
-    sh "kubectl delete ns ${namespace} --ignore-not-found"
+    	echo "Deleating namespace ${namespace} if needed"
+    	sh "kubectl delete ns ${namespace} --ignore-not-found"
 }
 
 def deleteNamespaceContent (namespace) {
@@ -48,7 +46,6 @@ def curlTest (namespace, out) {
         def svc_port = sh (
                 returnStdout: true,
                 script: "kubectl get svc -n ${namespace}  | awk \'{print \$5}\' | grep -iPo \'(?<=:).*(?=/)\'"
-		
         )
 
         if (svc_port.equals('')) {
@@ -57,8 +54,7 @@ def curlTest (namespace, out) {
         }
 
         echo "svc_port is ${svc_port}"
-        url = clusterURL + ':' + svc_port
-
+        url = 'https://' + clusterIP + ':' + svc_port
         curlRun (url, out)
     }
 }
@@ -71,7 +67,8 @@ pipeline {
 	environment {
     		registry = "petreocty1998/octav_rep"
     		registryCredential = 'dockerhub'
-		clusterURL = "https://192.168.99.103"
+		clusterURL = "https://192.168.99.100:8443"
+		clusterIP = "192.168.99.100"
   	}
 
   	agent any
