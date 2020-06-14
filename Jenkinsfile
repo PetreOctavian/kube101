@@ -109,7 +109,7 @@ pipeline {
 				script{
 					
 					namespace = 'development'
-					withKubeConfig([credentialsId: 'kubeconfig', serverUrl: "https://172.17.0.3:8443"]) {
+					withKubeConfig([credentialsId: 'kubeconfig']) {
 						deleteNamespaceContent (namespace)
 						deleteNamespace (namespace)
 						echo "Deploying application to ${namespace} namespace"
