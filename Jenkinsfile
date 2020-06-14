@@ -125,7 +125,11 @@ pipeline {
 			}
 		}
 		stage('Dev tests') {
-			curlTest (namespace, 'http_code')
+			steps{
+				script{
+					curlTest (namespace, 'http_code')
+				}
+			}
             		/*parallel {
                 		stage('Curl http_code') {
                     			steps {
