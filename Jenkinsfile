@@ -125,7 +125,8 @@ pipeline {
 			}
 		}
 		stage('Dev tests') {
-            		parallel {
+			curlTest (namespace, 'http_code')
+            		/*parallel {
                 		stage('Curl http_code') {
                     			steps {
                         			curlTest (namespace, 'http_code')
@@ -141,7 +142,7 @@ pipeline {
                         			curlTest (namespace, 'size_download')
                     			}
                 		}
-            		}
+            		}*/
         	}
 	}
 }
