@@ -54,7 +54,7 @@ def curlTest (namespace, out) {
         }
 
         echo "svc_port is ${svc_port}"
-        url = 'https://' + clusterIP + ':' + svc_port
+        url = clusterIP + ':' + svc_port
         curlRun (url, out)
     }
 }
