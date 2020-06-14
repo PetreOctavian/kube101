@@ -110,6 +110,7 @@ pipeline {
 					
 					namespace = 'development'
 					withKubeConfig([credentialsId: 'kubeconfig']) {
+						sh "kubectl config view"
 						deleteNamespaceContent (namespace)
 						deleteNamespace (namespace)
 						echo "Deploying application to ${namespace} namespace"
