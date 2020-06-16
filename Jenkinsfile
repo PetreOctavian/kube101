@@ -45,7 +45,8 @@ def curlTest (namespace, out) {
         // Get deployment's service IP
         def svc_port = sh (
                 returnStdout: true,
-                script: "kubectl get svc -n ${namespace}  | awk \'{print \$5}\' | grep -iPo \'(?<=:).*(?=/)\'"
+                //script: "kubectl get svc -n ${namespace}  | awk \'{print \$5}\' | grep -iPo \'(?<=:).*(?=/)\'"
+		script: "kubectl get svc -n ${namespace}  | awk \'{print \$3}\'| grep web"
         )
 
         if (svc_port.equals('')) {
@@ -54,7 +55,8 @@ def curlTest (namespace, out) {
         }
 
         echo "svc_port is ${svc_port}"
-        url = clusterIP + ':' + svc_port
+        //url = clusterIP + ':' + svc_port
+	url = 'http://' + svc_port
         curlRun (url, out)
     }
 }
