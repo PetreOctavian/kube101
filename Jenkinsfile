@@ -69,8 +69,8 @@ pipeline {
 	environment {
     		registry = "petreocty1998/octav_rep"
     		registryCredential = 'dockerhub'
-		clusterURL = "https://172.17.0.3:8443"
-		clusterIP = "172.17.0.3"
+		clusterURL = "https://172.17.0.2:8443"
+		clusterIP = "172.17.0.2"
   	}
 
   	agent any
