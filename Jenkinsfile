@@ -120,8 +120,8 @@ pipeline {
 						createNamespace (namespace)
 						sh "kubectl patch serviceaccount default -p \"{\\\"imagePullSecrets\\\": [{\\\"name\\\": \\\"dh-secret\\\"}]}\" --namespace ${namespace}"
 						dir("k8s") {
-							sh "kubectl apply -f  db_dev.yaml"
-							sh "kubectl apply -f  web.yaml -n ${namespace}"
+							sh "kubectl apply -f  db.yaml"
+							sh "kubectl apply -f  web.yaml"
 						}
 					}
 				}
