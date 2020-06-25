@@ -56,7 +56,8 @@ def curlTest (namespace, out) {
 
         echo "svc_port is ${svc_IP}"
         //url = clusterIP + ':' + svc_port
-	url = 'http://' + svc_IP
+	//url = 'http://' + svc_IP
+	url = svc_IP
         curlRun (url, out)
     }
 }
@@ -120,7 +121,7 @@ pipeline {
 						sh "kubectl patch serviceaccount default -p \"{\\\"imagePullSecrets\\\": [{\\\"name\\\": \\\"dh-secret\\\"}]}\" --namespace ${namespace}"
 						dir("k8s") {
 							sh "kubectl apply -f  db_dev.yaml"
-							sh "kubectl apply -f  web.yaml"
+							sh "kubectl apply -f  web.yaml -n ${namespace}"
 						}
 					}
 				}
