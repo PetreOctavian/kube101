@@ -1,17 +1,15 @@
 def createNamespace (namespace) {
-    echo "Creating namespace1 ${namespace}"
-
+	echo "lCreating namespace1 ${namespace}"
 	sh "kubectl create ns ${namespace}"
 }
 
 def deleteNamespace (namespace) {
-    echo "Deleating namespace ${namespace} if needed"
-
-    sh "kubectl delete ns ${namespace} --ignore-not-found"
+    	echo "Deleating namespace ${namespace} if needed"
+    	sh "kubectl delete ns ${namespace} --ignore-not-found"
 }
 
 def deleteNamespaceContent (namespace) {
-	sh "kubectl delete all --all -n ${namespace} --ignore-not-found"
+	sh "kubectl delete all --all -n ${namespace}"
 }
 
 /*
@@ -27,7 +25,7 @@ def curlRun (url, out) {
         echo "Getting ${out}"
             def result = sh (
                 returnStdout: true,
-                script: "curl --output /dev/null --silent --connect-timeout 5 --max-time 5 --retry 5 --retry-delay 5 --retry-max-time 30 --write-out \"%{${out}}\" ${url}"
+                script: "curl --output /dev/null --silent --connect-timeout 5 --max-time 5 --retry 5 --retry-delay 5 --retry-max-time 30 --write-out \'%{${out}}\' ${url}"
         )
         echo "Result (${out}): ${result}"
     }
@@ -45,19 +43,20 @@ def curlTest (namespace, out) {
         }
 
         // Get deployment's service IP
-        def svc_ip = sh (
+        def svc_port = sh (
                 returnStdout: true,
-                script: "kubectl get svc -n ${namespace} | grep web | awk '{print \$3}'"
+                //script: "kubectl get svc -n ${namespace}  | awk \'{print \$5}\' | grep -iPo \'(?<=:).*(?=/)\'"
+		script: "kubectl get svc -n ${namespace} | grep web | awk \'{print \$3}\'"
         )
 
-        if (svc_ip.equals('')) {
+        if (svc_port.equals('')) {
             echo "ERROR: Getting service IP failed"
             sh 'exit 1'
         }
 
-        echo "svc_ip is ${svc_ip}"
-        url = 'http://' + svc_ip
-
+        echo "svc_port is ${svc_port}"
+        //url = clusterIP + ':' + svc_port
+	url = 'http://' + svc_port
         curlRun (url, out)
     }
 }
@@ -70,12 +69,14 @@ pipeline {
 	environment {
     		registry = "petreocty1998/octav_rep"
     		registryCredential = 'dockerhub'
+		clusterURL = "https://172.17.0.2:8443"
+		clusterIP = "172.17.0.2"
   	}
 
   	agent any
 
   	stages {
-  		/*stage('Cloning our Git') {
+  		stage('Cloning our Git') {
       			steps {
             			git 'https://github.com/PetreOctavian/kube101.git'
       			}
@@ -104,25 +105,29 @@ pipeline {
               				}
 				}
 			}
-		}*/
+		}
 		stage('Deploy to dev'){
 			steps{
 				script{
 					
 					namespace = 'development'
-					deleteNamespaceContent (namespace)
-					deleteNamespace (namespace)
-                    			echo "Deploying application to ${namespace} namespace"
-                    			createNamespace (namespace)
-					dir("k8s") {
-						sh "kubectl apply -f  db.yaml --namespace ${namespace}"
-						sh "kubectl apply -f  web.yaml --namespace ${namespace}"
-	      				}
+					withKubeConfig([credentialsId: 'kubeconfig']) {
+						sh "kubectl config view"
+						deleteNamespaceContent (namespace)
+						deleteNamespace (namespace)
+						echo "Deploying application to ${namespace} namespace"
+						createNamespace (namespace)
+						sh "kubectl patch serviceaccount default -p \"{\\\"imagePullSecrets\\\": [{\\\"name\\\": \\\"dh-secret\\\"}]}\" --namespace ${namespace}"
+						dir("k8s") {
+							sh "kubectl apply -f  db.yaml --namespace ${namespace}"
+							sh "kubectl apply -f  web.yaml --namespace ${namespace}"
+						}
+					}
 				}
 			}
 		}
 		stage('Dev tests') {
-            		parallel {
+			parallel {
                 		stage('Curl http_code') {
                     			steps {
                         			curlTest (namespace, 'http_code')

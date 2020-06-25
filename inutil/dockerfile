@@ -1,23 +1,29 @@
-#imagine sursă
-FROM repository:image
-	
-#cel care se ocupă de imagine	
-MAINTAINER name email
+# construiește imaginea pornind de la o imagine existentă numita ”centos”, versiunea ”latest”
+FROM centos:latest
 
-#setarea variabilelor mediului
+# stabilește cine se ocupă de imagine
+MANTAINER petreoctavian
+
+# setarea varibilelor de mediu
 ENV key value
 
-#instalare aplicații,copiere și descărcare de date	
-RUN/ADD/COPY commands
+# execută o comandă în timpul construirii imaginii
+RUN yum install git
 
-#rularea de comenzi in terminalul containerului
-CMD command params[]
+# din acest punct, orice comandă ulterioară va fi executată sub user-ul ”centos”
+USER centos
 
-#expunere porturi
-EXPOSE port1, port2
+# atunci când vom porni containerul, va fi executată comanda /usr/sbin/haproxy cu parametrii respectivi
+ENTRYPOINT /usr/sbin/haproxy -f /etc/haproxy.cfg
 
-#calea spre aplicație	
-ENTRYPOINT /path/to/app
+# copiază haproxy.cfg de pe host în container la locația /etc/haproxy.cfg
+COPY haproxy.cfg /etc/haproxy.cfg
 
-#volum de date	
-VOLUME /path/to/data/volume
+# adaugă conținutul url în container la locația /tmp/resources
+ADD http://site.com/resources /tmp/resources
+
+# crearea unui volum persistent la locația /data/persistent din cadrul containerului
+VOLUME /data/persistent
+
+# publică doar la nivel informativ porturile pe care există aplicații în container
+EXPOSE 80/tcp
