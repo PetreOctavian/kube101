@@ -98,7 +98,7 @@ pipeline {
 				}
 			}	
 		}
-		stage('Pushing image'){
+		/*stage('Pushing image'){
 			steps{
 				script{	
               				docker.withRegistry( '', registryCredential ) {
@@ -106,7 +106,7 @@ pipeline {
               				}
 				}
 			}
-		}
+		}*/
 		stage('Deploy to dev'){
 			steps{
 				script{
@@ -114,11 +114,11 @@ pipeline {
 					namespace = 'dev'
 					withKubeConfig([credentialsId: 'kubeconfig']) {
 						sh "kubectl config view"
-						deleteNamespaceContent (namespace)
-						deleteNamespace (namespace)
+						//deleteNamespaceContent (namespace)
+						//deleteNamespace (namespace)
 						echo "Deploying application to ${namespace} namespace"
-						createNamespace (namespace)
-						sh "kubectl patch serviceaccount default -p \"{\\\"imagePullSecrets\\\": [{\\\"name\\\": \\\"dh-secret\\\"}]}\" --namespace ${namespace}"
+						//createNamespace (namespace)
+						//sh "kubectl patch serviceaccount default -p \"{\\\"imagePullSecrets\\\": [{\\\"name\\\": \\\"dh-secret\\\"}]}\" --namespace ${namespace}"
 						dir("k8s") {
 							sh "kubectl apply -f  db.yaml"
 							sh "kubectl apply -f  web.yaml"
