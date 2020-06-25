@@ -127,7 +127,7 @@ pipeline {
 				}
 			}
 		}
-		stage('Dev tests') {
+		/*stage('Dev tests') {
 			parallel {
                 		stage('Curl http_code') {
                     			steps {
@@ -145,6 +145,6 @@ pipeline {
                     			}
                 		}
             		}
-        	}
+        	}*/
 	}
 }
