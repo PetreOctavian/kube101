@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: azure-db-secret
+  labels:
+    app: DB
+type: Opaque
+data:
+  azurestorageaccountname: cGxhbmV0aWNrZXRz
+  azurestorageaccountkey: dG92Q3d1QWJCT3RmaDNtZ1FZV05mRmIzZ2UramZDR2dBMnV2VngxNVpmZlo5L2FQcGN0L3JkWHRPNlNKSU1yRlY2RDJSYkMvaDlJVnBYNnlOazlvSUE9PQ==
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: db-pv
+  labels:
+    usage: azureDB-storage
+    app: DB
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  azureFile:
+    secretName: azure-db-secret
+    shareName: dboctav
+    readOnly: false

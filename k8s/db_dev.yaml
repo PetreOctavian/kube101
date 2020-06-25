@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: dev
   name: db-service
   labels:
     app: DB
@@ -16,11 +17,12 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: dev
   name: db-deployment
   labels:
     app: DB
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: MYSQL
@@ -31,8 +33,11 @@ spec:
     spec:
       containers:
       - name: db-container
-        image: mysql:latest #petreocty1998/octav_rep:dbster
+        image: mysql:5.7 #petreocty1998/octav_rep:dbster
         lifecycle:
+          postStart:
+            exec:
+              command: ["/bin/sh", "-c", "sed -i /docker-entrypoint-initdb.d/planetickets.sql -e 's/utf8mb4_0900_ai_ci/utf8mb4_unicode_ci/g'"]
           preStop:
             exec:
               command: ["/bin/sh","-c","mysqldump -u$MYSQL_USER -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE > /docker-entrypoint-initdb.d/planetickets.sql"]
@@ -73,6 +78,7 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  namespace: dev
   name: db-configmap
   labels:
     app: DB
@@ -85,6 +91,7 @@ data:
 apiVersion: v1
 kind: Secret
 metadata:
+  namespace: dev
   name: azure-db-secret
   labels:
     app: DB
@@ -114,6 +121,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  namespace: dev
   name: db-pvc
   labels:
     app: DB
