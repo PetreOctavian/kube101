@@ -1,5 +1,5 @@
 def createNamespace (namespace) {
-	echo "Creating namespace1 ${namespace}"
+	echo "fCreating namespace1 ${namespace}"
 	sh "kubectl create ns ${namespace}"
 }
 
