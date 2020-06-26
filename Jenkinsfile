@@ -1,3 +1,18 @@
+def prepareNamespace (namespace) {
+	echo "Deleating namespace ${namespace} and it's content if needed"
+	sh "kubectl delete all --all -n ${namespace} --ignore-not-found"
+    	sh "kubectl delete ns ${namespace} --ignore-not-found"
+	echo "Creating namespace ${namespace}"
+	sh "kubectl create ns ${namespace}"
+}
+
+def clearNamespace (namespace) {
+    	echo "Deleating namespace ${namespace}"
+	sh "kubectl delete all --all -n ${namespace} --ignore-not-found"
+    	sh "kubectl delete ns ${namespace} --ignore-not-found"
+}
+
+
 pipeline {
 
 	environment {
@@ -42,10 +57,11 @@ pipeline {
 			//agent { label slave }
 			steps{
 				script{
-					
 					withKubeConfig([credentialsId: 'kubeconfig']) {
-						sh "kubectl apply -f  db.yaml"
-						sh "kubectl apply -f  web.yaml"
+						namespace = 'dev'
+						prepareNamespace (namespace)
+						sh "kubectl apply -f  db_dev.yaml"
+						sh "kubectl apply -f  web.yaml -n ${namespace}"
 					}
 					
 				}
