@@ -107,7 +107,7 @@ pipeline {
 						sh "kubectl apply -f  db_dev.yaml"
 						sh "kubectl apply -f  web.yaml -n ${namespace}"
 					}
-					sh "sleep 60"
+					//sh "sleep 60"
 					
 				}
 			}
@@ -116,19 +116,19 @@ pipeline {
 			parallel {
                 		stage('Curl http_code') {
                     			steps {
-						sh "sleep 10"
+						//sh "sleep 10"
                         			curlTest (namespace, 'http_code')
                     			}
                 		}
                 		stage('Curl total_time') {
                     			steps {
-						sh "sleep 10"
+						//sh "sleep 10"
                         			curlTest (namespace, 'time_total')
                     			}
                 		}
                 		stage('Curl size_download') {
                     			steps {
-						sh "sleep 10"
+						//sh "sleep 10"
                         			curlTest (namespace, 'size_download')
                     			}
                 		}
