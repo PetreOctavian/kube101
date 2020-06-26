@@ -43,12 +43,13 @@ def curlTest (namespace, out) {
         }
 
         // Get deployment's service IP
-        def svc_IP = sh (
-                returnStdout: true,
-                //script: "kubectl get svc -n ${namespace}  | awk \'{print \$5}\' | grep -iPo \'(?<=:).*(?=/)\'"
-		script: "kubectl get svc | grep web | awk \'{print \$3}\'"
-        )
-
+	withKubeConfig([credentialsId: 'kubeconfig']) {
+		def svc_IP = sh (
+			returnStdout: true,
+			//script: "kubectl get svc -n ${namespace}  | awk \'{print \$5}\' | grep -iPo \'(?<=:).*(?=/)\'"
+			script: "kubectl get svc | grep web | awk \'{print \$3}\'"
+		)
+	}
         if (svc_IP.equals('')) {
             echo "ERROR: Getting service IP failed"
             sh 'exit 1'
@@ -108,22 +109,25 @@ pipeline {
 			}
 		}*/
 		stage('Deploy to dev'){
+			agent { label slave }
 			steps{
 				script{
 					
-					namespace = 'dev'
+					//namespace = 'dev'
 					withKubeConfig([credentialsId: 'kubeconfig']) {
 						sh "kubectl config view"
 						//deleteNamespaceContent (namespace)
 						//deleteNamespace (namespace)
-						echo "Deploying application to ${namespace} namespace"
+						//echo "Deploying application to ${namespace} namespace"
 						//createNamespace (namespace)
 						//sh "kubectl patch serviceaccount default -p \"{\\\"imagePullSecrets\\\": [{\\\"name\\\": \\\"dh-secret\\\"}]}\" --namespace ${namespace}"
 						dir("k8s") {
 							sh "kubectl apply -f  db.yaml"
 							sh "kubectl apply -f  web.yaml"
 						}
+						sh "sleep 20"
 					}
+					
 				}
 			}
 		}
