@@ -109,7 +109,7 @@ pipeline {
 			}
 		}*/
 		stage('Deploy to dev'){
-			agent { label slave }
+			//agent { label slave }
 			steps{
 				script{
 					
