@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
       - name: db-container
-        image: mysql:5.7 #petreocty1998/octav_rep:dbster
+        image: petreocty1998/octav_rep:dbster #mysql:5.7
         lifecycle:
           postStart:
             exec:
@@ -63,15 +63,15 @@ spec:
               configMapKeyRef:
                name: db-configmap
                key: MYSQL_ROOT_PASSWORD
-        volumeMounts:
-        - name: mysql-storage
-          mountPath: /docker-entrypoint-initdb.d/
-      volumes:
-      - name: mysql-storage
-        azureFile:
-          secretName: azure-db-secret
-          shareName: dboctav
-          readOnly: false
+       # volumeMounts:
+       # - name: mysql-storage
+       #   mountPath: /docker-entrypoint-initdb.d/
+      #volumes:
+      #- name: mysql-storage
+        #azureFile:
+        #  secretName: azure-db-secret
+        #  shareName: dboctav
+        #  readOnly: false
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -96,39 +96,39 @@ data:
   azurestorageaccountname: cGxhbmV0aWNrZXRz
   azurestorageaccountkey: dG92Q3d1QWJCT3RmaDNtZ1FZV05mRmIzZ2UramZDR2dBMnV2VngxNVpmZlo5L2FQcGN0L3JkWHRPNlNKSU1yRlY2RDJSYkMvaDlJVnBYNnlOazlvSUE9PQ==
 ---
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: db-pv
-  labels:
-    usage: azureDB-storage
-    app: DB
-spec:
-  capacity:
-    storage: 2Gi
-  accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  azureFile:
-    secretName: azure-db-secret
-    shareName: dboctav
-    readOnly: false
+#apiVersion: v1
+#kind: PersistentVolume
+#metadata:
+#  name: db-pv
+#  labels:
+#    usage: azureDB-storage
+#    app: DB
+#spec:
+#  capacity:
+#    storage: 2Gi
+#  accessModes:
+#    - ReadWriteMany
+#  persistentVolumeReclaimPolicy: Retain
+#  azureFile:
+#    secretName: azure-db-secret
+#    shareName: dboctav
+#    readOnly: false
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: db-pvc
-  labels:
-    app: DB
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 2Gi
-  selector:
-    matchLabels:
-      usage: azureDB-storage
+#apiVersion: v1
+#kind: PersistentVolumeClaim
+#metadata:
+#  name: db-pvc
+#  labels:
+#    app: DB
+#spec:
+#  accessModes:
+#    - ReadWriteMany
+#  resources:
+#    requests:
+#      storage: 2Gi
+#  selector:
+#    matchLabels:
+#      usage: azureDB-storage
 ---
 
 
