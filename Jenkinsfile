@@ -66,9 +66,9 @@ pipeline {
   	}
 
   	parameters {
-        string (name: 'GIT_BRANCH',           defaultValue: 'master',  description: 'Git branch to build')
-        booleanParam (name: 'DEPLOY_TO_PROD', defaultValue: false,     description: 'If build and tests are good, proceed and deploy to production without manual approval')
-    }
+        	string (name: 'GIT_BRANCH',           defaultValue: 'master',  description: 'Git branch to build')
+        	booleanParam (name: 'DEPLOY_TO_PROD', defaultValue: false,     description: 'If build and tests are good, proceed and deploy to production without manual approval')
+    	}
 
   	agent any
 
@@ -106,13 +106,13 @@ pipeline {
 		stage('Deploy to dev'){
 			steps{
 				script{
-						namespace = 'dev'
-						withKubeConfig([credentialsId: 'kubeconfig']) {
-							prepareNamespace (namespace)
-							sh "kubectl apply -f  db_dev.yaml"
-							sh "kubectl apply -f  web.yaml -n ${namespace}"
-						}
-						sh "sleep 60"
+					namespace = 'dev'
+					withKubeConfig([credentialsId: 'kubeconfig']) {
+						prepareNamespace (namespace)
+						sh "kubectl apply -f  db_dev.yaml"
+						sh "kubectl apply -f  web.yaml -n ${namespace}"
+					}
+					sh "sleep 60"
 				}
 			}
 		}
@@ -133,30 +133,27 @@ pipeline {
                         			curlTest (namespace, 'size_download')
                     			}
                 		}
-            }
-        }
-        stage('Cleanup dev') {
-            steps {
-                script {
-                    withKubeConfig([credentialsId: 'kubeconfig']) {
+			}
+            	}
+        	stage('Cleanup dev') {
+            		steps {
+                		script {
+                    			withKubeConfig([credentialsId: 'kubeconfig']) {
 						clearNamespace(namespace)
-					}
-                }
-            }
-        }
-        stage('Deploy to preprod'){
-			//agent { label slave }
+				}
+                	}
+		}
+			
+        	stage('Deploy to preprod'){
 			steps{
 				script{
-						namespace = 'preprod'
+					namespace = 'preprod'
 					withKubeConfig([credentialsId: 'kubeconfig']) {
 						prepareNamespace (namespace)
-
-						sh "kubectl apply -f  db_dev.yaml"
+						sh "kubectl apply -f  db_preprod.yaml"
 						sh "kubectl apply -f  web.yaml -n ${namespace}"
 					}
 					sh "sleep 60"
-					
 				}
 			}
 		}
@@ -164,79 +161,71 @@ pipeline {
 			parallel {
                 		stage('Curl http_code') {
                     			steps {
-						//sh "sleep 10"
                         			curlTest (namespace, 'http_code')
                     			}
                 		}
                 		stage('Curl total_time') {
                     			steps {
-						//sh "sleep 10"
                         			curlTest (namespace, 'time_total')
                     			}
                 		}
                 		stage('Curl size_download') {
                     			steps {
-						//sh "sleep 10"
                         			curlTest (namespace, 'size_download')
                     			}
                 		}
-            }
-        }
-        stage('Cleanup dev') {
-            steps {
-                script {
-                    withKubeConfig([credentialsId: 'kubeconfig']) {
+            		}
+        	}
+        	stage('Cleanup dev') {
+            		steps {
+                		script {
+                    			withKubeConfig([credentialsId: 'kubeconfig']) {
 						clearNamespace(namespace)
 					}
-                }
-            }
-        }
-
-        stage('Go for Production?') {
-            when {
-                allOf {
-                    environment name: 'GIT_BRANCH', value: 'master'
-                    environment name: 'DEPLOY_TO_PROD', value: 'false'
-                }
-            }
-
-            steps {
-                // Prevent any older builds from deploying to production
-                milestone(1)
-                input 'Proceed and deploy to Production?'
-                milestone(2)
-
-                script {
-                    DEPLOY_PROD = true
-                }
-            }
-        }
-
-        stage('Deploy to prod'){
-
-        	when {
-                anyOf {
-                    expression { DEPLOY_PROD == true }
-                    environment name: 'DEPLOY_TO_PROD', value: 'true'
-                }
-            }
+                		}
+            		}
+        	}
+        	stage('Go for Production?') {
+            		when {
+                		allOf {
+					environment name: 'GIT_BRANCH', value: 'master'
+                    			environment name: 'DEPLOY_TO_PROD', value: 'false'
+                		}
+            		}
+            		steps {
+				// Prevent any older builds from deploying to production
+				milestone(1)
+				input 'Proceed and deploy to Production?'
+				milestone(2)
+                		script {
+                    			DEPLOY_PROD = true
+                			}
+            		}
+        	}
+        	stage('Deploy to prod'){
+        		when {
+                		anyOf {
+					expression { DEPLOY_PROD == true }
+				    	environment name: 'DEPLOY_TO_PROD', value: 'true'
+                		}
+            		}
 			steps{
 				script{
-					    DEPLOY_PROD = true
-						namespace = 'prod'
-						withKubeConfig([credentialsId: 'kubeconfig']) {
-							prepareNamespace (namespace)
-							sh "kubectl apply -f  db_prdo.yaml"
-							sh "kubectl apply -f  web.yaml -n ${namespace}"
-						}
-						sh "sleep 60"
+					DEPLOY_PROD = true
+					namespace = 'prod'
+					withKubeConfig([credentialsId: 'kubeconfig']) {
+						prepareNamespace (namespace)
+						sh "kubectl apply -f  db_prod.yaml"
+						sh "kubectl apply -f  web.yaml -n ${namespace}"
+					}
+					sh "sleep 60"
 				}
 			}
 		}
 		stage('Prod tests') {
 			when {
-                expression { DEPLOY_PROD == true }
-            }
+                		expression { DEPLOY_PROD == true }
+            		}
 			parallel {
              			stage('Curl http_code') {
                     			steps {
@@ -253,8 +242,8 @@ pipeline {
                         			curlTest (namespace, 'size_download')
                     			}
                 		}
-            }
-        }
+            		}
+        	}
 
 	}
 }
