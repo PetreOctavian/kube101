@@ -175,7 +175,7 @@ pipeline {
                 		}
             		}
         	}
-        	stage('Cleanup dev') {
+        	stage('Cleanup preprod') {
             		steps {
                 		script {
                     			withKubeConfig([credentialsId: 'kubeconfig']) {
