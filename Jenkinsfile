@@ -184,65 +184,7 @@ pipeline {
                 		}
             		}
         	}
-        	stage('Go for Production?') {
-            		when {
-                		allOf {
-					environment name: 'GIT_BRANCH', value: 'master'
-                    			environment name: 'DEPLOY_TO_PROD', value: 'false'
-                		}
-            		}
-            		steps {
-				// Prevent any older builds from deploying to production
-				milestone(1)
-				input 'Proceed and deploy to Production?'
-				milestone(2)
-                		script {
-                    				DEPLOY_PROD = true
-                			}
-            		}
-        	}
-        	stage('Deploy to prod'){
-        		when {
-                		anyOf {
-					expression { DEPLOY_PROD == true }
-				    	environment name: 'DEPLOY_TO_PROD', value: 'true'
-                		}
-            		}
-			steps{
-				script{
-					DEPLOY_PROD = true
-					namespace = 'prod'
-					withKubeConfig([credentialsId: 'kubeconfig']) {
-						prepareNamespace (namespace)
-						sh "kubectl apply -f  db_prod.yaml"
-						sh "kubectl apply -f  web.yaml -n ${namespace}"
-					}
-					sh "sleep 60"
-				}
-			}
-		}
-		stage('Prod tests') {
-			when {
-                		expression { DEPLOY_PROD == true }
-            		}
-			parallel {
-             			stage('Curl http_code') {
-                    			steps {
-                        			curlTest (namespace, 'http_code')
-                    			}
-                		}
-                		stage('Curl total_time') {
-                    			steps {
-                        			curlTest (namespace, 'time_total')
-                    			}
-                		}
-                		stage('Curl size_download') {
-                    			steps {
-                        			curlTest (namespace, 'size_download')
-                    			}
-                		}
-            		}
-		}
+        	
 			
 	}	
         	
