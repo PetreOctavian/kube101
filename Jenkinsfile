@@ -104,7 +104,11 @@ pipeline {
 					withKubeConfig([credentialsId: 'kubeconfig']) {
 						namespace = 'dev'
 						prepareNamespace (namespace)
-						sh "kubectl apply -f  db_dev.yaml"
+						//sh "kubectl apply -f  db_dev.yaml"
+						dir("k8s") {
+							sh "kubectl apply -f  db_dev.yaml"
+							//sh "kubectl apply -f  web.yaml"
+						}
 						sh "kubectl apply -f  web.yaml -n ${namespace}"
 					}
 					sh "sleep 60"
