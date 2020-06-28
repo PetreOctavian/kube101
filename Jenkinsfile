@@ -1,5 +1,5 @@
 def prepareNamespace (namespace) {
-	echo "Dneleating namespace ${namespace} and it's content if needed"
+	echo "Deleating namespace ${namespace} and it's content if needed"
 	sh "kubectl delete all --all -n ${namespace} --ignore-not-found"
     	sh "kubectl delete ns ${namespace} --ignore-not-found"
 	echo "Creating namespace ${namespace}"
@@ -36,8 +36,6 @@ def curlTest (namespace, out) {
         if (out.equals('')) {
             out = 'http_code'
         }
-
-        // Get deployment's service IP
         def svc_IP = sh (
                 returnStdout: true,
                 //script: "kubectl get svc -n ${namespace}  | awk \'{print \$5}\' | grep -iPo \'(?<=:).*(?=/)\'"
@@ -50,8 +48,6 @@ def curlTest (namespace, out) {
         }
 
         echo "svc_port is ${svc_IP}"
-        //url = clusterIP + ':' + svc_port
-	//url = 'http://' + svc_IP
 	url = svc_IP
         curlRun (url, out)
     }
