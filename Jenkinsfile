@@ -143,7 +143,7 @@ pipeline {
 				}
                 	}
 		}
-		stage('Deploy to preprod'){
+		/*stage('Deploy to preprod'){
 			steps{
 				script{
 					namespace = 'preprod'
@@ -183,6 +183,6 @@ pipeline {
 					}
                 		}
             		}
-        	}		
+        	}*/		
 	}
 }
