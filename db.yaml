@@ -33,6 +33,9 @@ spec:
       - name: db-container
         image: petreocty1998/octav_rep:dbster
         lifecycle:
+          postStart:
+            exec:
+              command: ["/bin/sh", "-c", "sed -i /docker-entrypoint-initdb.d/planetickets.sql -e 's/utf8mb4_0900_ai_ci/utf8mb4_unicode_ci/g'"]
           preStop:
             exec:
               command: ["/bin/sh","-c","mysqldump -u$MYSQL_USER -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE > /docker-entrypoint-initdb.d/planetickets.sql"]
