@@ -4,7 +4,8 @@ def prepareNamespace (namespace) {
     	sh "kubectl delete ns ${namespace} --ignore-not-found"
 	echo "Creating namespace ${namespace}"
 	sh "kubectl create ns ${namespace}"
-	sh "kubectl patch serviceaccount default -p \"{\\\"imagePullSecrets\\\": [{\\\"name\\\": \\\"dh-secret\\\"}]}\" --namespace ${namespace}"
+	sh "kubectl apply -f pullsecret.yaml -n ${namespace}"
+	sh "kubectl patch serviceaccount default -p \"{\\\"imagePullSecrets\\\": [{\\\"name\\\": \\\"dh-secret\\\"}]}\" -n ${namespace}"
 }
 
 def clearNamespace (namespace) {
