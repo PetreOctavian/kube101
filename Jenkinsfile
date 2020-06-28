@@ -139,9 +139,10 @@ pipeline {
             		steps {
                 		script {
                     			withKubeConfig([credentialsId: 'kubeconfig']) {
-						clearNamespace(namespace)
-				}
-                	}
+											clearNamespace(namespace)
+					}
+                		}
+			}
 		}
 		stage('Deploy to preprod'){
 			steps{
@@ -179,11 +180,10 @@ pipeline {
             		steps {
                 		script {
                     			withKubeConfig([credentialsId: 'kubeconfig']) {
-						clearNamespace(namespace)
+											clearNamespace(namespace)
 					}
                 		}
             		}
         	}		
-		}
 	}
 }
