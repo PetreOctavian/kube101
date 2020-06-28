@@ -131,7 +131,7 @@ pipeline {
                 		}
 			}
             	}
-        	stage('Cleanup dev') {
+        	/*stage('Cleanup dev') {
             		steps {
                 		script {
                     			withKubeConfig([credentialsId: 'kubeconfig']) {
@@ -140,7 +140,7 @@ pipeline {
                 		}
 			}
 		}
-		/*stage('Deploy to preprod'){
+		stage('Deploy to preprod'){
 			steps{
 				script{
 					namespace = 'preprod'
