@@ -91,7 +91,7 @@ pipeline {
 						sh "ls /app/public"
 					}
 					DB.inside {
-						sh "mysql -u$MYSQL_USER -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE"
+						sh "mysql -uroot -proot planetickets"
 						sh "show tables;"
 					}
 				}
