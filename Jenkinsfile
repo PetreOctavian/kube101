@@ -79,9 +79,9 @@ pipeline {
     		stage('Building images') {
         		steps{
           			script {
-          				echo "${workspace}"
-					WEB = docker.build("${env.registry}:webimage","DockerfileWeb")
-					DB = docker.build("${env.registry}:dbimage","DockerfileDB")
+          				echo ${workspace}
+					WEB = docker.build("${env.registry}:webimage","${workspace}/DockerfileWeb")
+					DB = docker.build("${env.registry}:dbimage","${workspace}/DockerfileDB")
 				}
 			}
 		}
