@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: db-container
-        image: petreocty1998/octav_rep:dbster
+        image: petreoctav/licenta:dbimageBN${env.BUILD_NUMBER}
         lifecycle:
           preStop:
             exec:
