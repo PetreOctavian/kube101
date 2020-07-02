@@ -40,7 +40,7 @@ def curlTest (namespace, out) {
         def svc_IP = sh (
                 returnStdout: true,
                 //script: "kubectl get svc -n ${namespace}  | awk \'{print \$5}\' | grep -iPo \'(?<=:).*(?=/)\'"
-		script: "kubectl get svc -n ${namespace} | grep db | awk \'{print \$3}\'"
+		script: "kubectl get svc -n ${namespace} | grep web | awk \'{print \$3}\'"
         )
 
         if (svc_IP.equals('')) {
