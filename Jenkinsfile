@@ -91,8 +91,8 @@ pipeline {
 						sh "ls /app/public"
 					}
 					DB.inside {
-						sh "mysql -uroot -proot planetickets"
-						sh "show tables;"
+						sh "ls /docker-entrypoint-initdb.d"
+						
 					}
 				}
 			}	
