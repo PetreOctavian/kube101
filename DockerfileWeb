@@ -48,17 +48,14 @@ RUN apk add \
         php7-pecl-mcrypt
 
 RUN apk add php7-simplexml
-
 RUN cp /usr/bin/php7 /usr/bin/php \
     && rm -f /var/cache/apk/*
 
-COPY /aux_src/httpd.conf /etc/apache2
-
-RUN mkdir /app && mkdir /app/public && chown -R apache:apache /app && chmod -R 755 /app && mkdir bootstrap
-COPY /aux_src/start.sh /bootstrap/
-RUN chmod +x /bootstrap/start.sh
-
-COPY /src /app/public
+COPY /dockerfile_aux/web/httpd.conf /etc/apache2
+RUN mkdir /app && mkdir /app/public && chown -R apache:apache /app && chmod -R 755 /app && mkdir startserver
+COPY /dockerfile_aux/web/start.sh /startserver/
+RUN chmod +x /startserver/start.sh
+COPY src /app/public
 VOLUME /app/public/
 
-ENTRYPOINT ["/bootstrap/start.sh"]
+ENTRYPOINT ["/startserver/start.sh"]

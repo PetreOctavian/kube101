@@ -58,13 +58,13 @@ def curlTest (namespace, out) {
 pipeline {
 
 	environment {
-    		registry = "petreocty1998/octav_rep"
+    		registry = "petreoctav/licenta"
     		registryCredential = 'dockerhub'
   	}
 
   	parameters {
         	string (name: 'GIT_BRANCH',           defaultValue: 'master',  description: 'Git branch to build')
-        	booleanParam (name: 'DEPLOY_TO_PROD', defaultValue: false,     description: 'If build and tests are good, proceed and deploy to production without manual approval')
+        	booleanParam (name: 'DEPLOY_TO_PROD', defaultValue: false,     description: 'If build and tests are good on dev and reprod stages, proceed and deploy to production without manual approval')
     	}
 
   	agent any
@@ -75,18 +75,23 @@ pipeline {
             			git 'https://github.com/PetreOctavian/kube101.git'
       			}
     		}
-    		stage('Building image') {
+    		stage('Building images') {
         		steps{
           			script {
-					WEB = docker.build("${env.registry}:webimage")
+					WEB = docker.build("${env.registry}:webimage","./DockerfileWeb")
+					DB = docker.build("${env.registry}:dbimage","./DockerfileDB")
 				}
 			}
 		}
-		stage('Testing image'){
+		stage('Testing images'){
 			steps{
 				script{
 					WEB.inside {
 						sh "ls /app/public"
+					}
+					DB.inside {
+						sh "mysql -u$MYSQL_USER -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE"
+						sh "show tables;"
 					}
 				}
 			}	
@@ -96,6 +101,7 @@ pipeline {
 				script{	
               				docker.withRegistry( '', registryCredential ) {
                					WEB.push()
+               					DB.push()
               				}
 				}
 			}
@@ -106,7 +112,7 @@ pipeline {
 					namespace = 'dev'
 					withKubeConfig([credentialsId: 'kubeconfig']) {
 						prepareNamespace (namespace)
-						sh "kubectl apply -f  db_dev.yaml"
+						sh "kubectl apply -f  db.yaml -n ${namespace}"
 						sh "kubectl apply -f  web.yaml -n ${namespace}"
 					}
 					sh "sleep 60"
@@ -147,7 +153,7 @@ pipeline {
 					namespace = 'preprod'
 					withKubeConfig([credentialsId: 'kubeconfig']) {
 						prepareNamespace (namespace)
-						sh "kubectl apply -f  db_preprod.yaml"
+						sh "kubectl apply -f  db.yaml -n ${namespace}"
 						sh "kubectl apply -f  web.yaml -n ${namespace}"
 					}
 					sh "sleep 60"
@@ -212,7 +218,7 @@ pipeline {
 					namespace = 'prod'
 					withKubeConfig([credentialsId: 'kubeconfig']) {
 						prepareNamespace (namespace)
-						sh "kubectl apply -f  db_prod.yaml"
+						sh "kubectl apply -f  db.yaml -n ${namespace}"
 						sh "kubectl apply -f  web.yaml -n ${namespace}"
 					}
 					sh "sleep 60"

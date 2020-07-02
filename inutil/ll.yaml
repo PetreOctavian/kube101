@@ -37,6 +37,9 @@ spec:
               command: ["/bin/sh","-c","mysqldump -u$MYSQL_USER -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE > /docker-entrypoint-initdb.d/planetickets.sql"]
         ports:
         - containerPort: 3306
+        volumeMounts:
+        - name: mysql-updated-storage
+          mountPath: /docker-entrypoint-initdb.d/
         readinessProbe:
           tcpSocket:
             port: 3306
@@ -68,11 +71,18 @@ spec:
             valueFrom:
               configMapKeyRef:
                name: db-configmap
-               key: MYSQL_ROOT_PASSWORD           
+               key: MYSQL_ROOT_PASSWORD
+      volumes:
+      - name: mysql-updated-storage
+        hostPath:
+          path: /DBdata
+   	
+                   
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  namespace: dev
   name: db-configmap
   labels:
     app: DB

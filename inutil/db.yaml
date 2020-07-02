@@ -32,6 +32,9 @@ spec:
       - name: db-container
         image: petreocty1998/octav_rep:dbster
         lifecycle:
+          postStart:
+            exec:
+              command: ["/bin/sh", "-c", "sed -i /docker-entrypoint-initdb.d/planetickets.sql -e 's/utf8mb4_0900_ai_ci/utf8mb4_unicode_ci/g'"]
           preStop:
             exec:
               command: ["/bin/sh","-c","mysqldump -u$MYSQL_USER -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE > /docker-entrypoint-initdb.d/planetickets.sql"]
@@ -68,7 +71,14 @@ spec:
             valueFrom:
               configMapKeyRef:
                name: db-configmap
-               key: MYSQL_ROOT_PASSWORD           
+               key: MYSQL_ROOT_PASSWORD
+     	volumeMounts:
+        - name: mysql-updated-storage
+          mountPath: /docker-entrypoint-initdb.d/
+      volumes:
+      - name: mysql-updated-storage
+        hostPath:
+          path: /DBdata
 ---
 apiVersion: v1
 kind: ConfigMap
