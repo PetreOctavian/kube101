@@ -80,8 +80,8 @@ pipeline {
         		steps{
           			script {
           				echo ${workspace}
-					WEB = docker.build("${env.registry}:webimage","${env.WORKSPACE}/DockerfileWeb")
-					DB = docker.build("${env.registry}:dbimage","${env.WORKSPACE}/DockerfileDB")
+					WEB = docker.build("${env.registry}:webimage")
+					DB = docker.build("${env.registry}:dbimage","./dockerfile_aux/db")
 				}
 			}
 		}
