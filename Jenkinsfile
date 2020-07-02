@@ -60,7 +60,7 @@ pipeline {
 	environment {
     		registry = "petreoctav/licenta"
     		registryCredential = 'dockerhub'
-    		workspace = env.WORKSPACE
+    		//workspace = env.WORKSPACE
   	}
 
   	parameters {
@@ -80,8 +80,8 @@ pipeline {
         		steps{
           			script {
           				echo ${workspace}
-					WEB = docker.build("${env.registry}:webimage","${workspace}/DockerfileWeb")
-					DB = docker.build("${env.registry}:dbimage","${workspace}/DockerfileDB")
+					WEB = docker.build("${env.registry}:webimage","${env.WORKSPACE}/DockerfileWeb")
+					DB = docker.build("${env.registry}:dbimage","${env.WORKSPACE}/DockerfileDB")
 				}
 			}
 		}
