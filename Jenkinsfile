@@ -103,6 +103,7 @@ pipeline {
                					WEB.push()
                					DB.push()
               				}
+					sh "sleep 45"
 				}
 			}
 		}
