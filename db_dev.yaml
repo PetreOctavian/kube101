@@ -70,14 +70,7 @@ spec:
             valueFrom:
               configMapKeyRef:
                name: db-configmap
-               key: MYSQL_ROOT_PASSWORD
-   	volumeMounts:
-         - name: mysql-updated-storage
-           mountPath: /docker-entrypoint-initdb.d/
-      volumes:
-      - name: mysql-updated-storage
-        hostPath:
-          path: /DBdata             
+               key: MYSQL_ROOT_PASSWORD           
 ---
 apiVersion: v1
 kind: ConfigMap
