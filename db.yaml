@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: db-container
-        image: petreoctav/licenta:dbimage
+        image: petreoctav/licenta:dbimageBN
         lifecycle:
           preStop:
             exec:

@@ -113,10 +113,12 @@ pipeline {
 					namespace = 'dev'
 					withKubeConfig([credentialsId: 'kubeconfig']) {
 						prepareNamespace (namespace)
+						sh "sed -i 's/BN/BN${env.WORKSPACE}/g' db.yaml
 						sh "kubectl apply -f  db.yaml -n ${namespace}"
-						sh "kubectl set image deployments/db-deployment petreoctav/licenta:dbimage=petreoctav/licenta:dbimageBN${env.BUILD_NUMBER} -n ${namespace}"
+						//sh "kubectl set image deployments/db-deployment petreoctav/licenta:dbimage=petreoctav/licenta:dbimageBN${env.BUILD_NUMBER} -n ${namespace}"
+						sh "sed -i 's/BN/BN${env.WORKSPACE}/g' web.yaml
 						sh "kubectl apply -f  web.yaml -n ${namespace}"
-						sh "kubectl set image deployments/web-deployment petreoctav/licenta:webimage=petreoctav/licenta:webimageBN${env.BUILD_NUMBER} -n ${namespace}"
+						//sh "kubectl set image deployments/web-deployment petreoctav/licenta:webimage=petreoctav/licenta:webimageBN${env.BUILD_NUMBER} -n ${namespace}"
 					}
 					sh "sleep 60"
 				}
