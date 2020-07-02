@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: db-container
-        image: petreoctav/licenta:dbimageBN${env.BUILD_NUMBER}
+        image: petreoctav/licenta:dbimage
         lifecycle:
           preStop:
             exec:
