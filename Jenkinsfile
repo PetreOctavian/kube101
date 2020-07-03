@@ -4,14 +4,12 @@ def prepareNamespace (namespace) {
     	sh "kubectl delete ns ${namespace} --ignore-not-found"
 	echo "Creating namespace ${namespace}"
 	sh "kubectl create ns ${namespace}"
-	//sh "kubectl apply -f pullsecret.yaml -n ${namespace}"
-	//sh "kubectl patch serviceaccount default -p \"{\\\"imagePullSecrets\\\": [{\\\"name\\\": \\\"dh-secret\\\"}]}\" -n ${namespace}"
 }
 
 def clearNamespace (namespace) {
     echo "Deleating namespace ${namespace}"
 	sh "kubectl delete all --all -n ${namespace} --ignore-not-found"
-    sh "kubectl delete ns ${namespace} --ignore-not-found"
+    	sh "kubectl delete ns ${namespace} --ignore-not-found"
 }
 
 def curlRun (url, out) {
@@ -59,7 +57,6 @@ pipeline {
 	environment {
     		registry = "petreoctav/licenta"
     		registryCredential = 'dockerhub'
-    		//workspace = env.WORKSPACE
   	}
 
   	parameters {
@@ -113,12 +110,10 @@ pipeline {
 					namespace = 'dev'
 					withKubeConfig([credentialsId: 'kubeconfig']) {
 						prepareNamespace (namespace)
-						sh "sed -i \"s/BN/BN${env.BUILD_NUMBER}/g\" db.yaml"
+						sh "sed -i \"s/CTX/BN${env.BUILD_NUMBER}BI${env.BUILD_ID}/g\" db.yaml"
 						sh "kubectl apply -f  db.yaml -n ${namespace}"
-						//sh "kubectl set image deployments/db-deployment petreoctav/licenta:dbimage=petreoctav/licenta:dbimageBN${env.BUILD_NUMBER} -n ${namespace}"
-						sh "sed -i \"s/BN/BN${env.BUILD_NUMBER}/g\" web.yaml"
+						sh "sed -i \"s/CTX/BN${env.BUILD_NUMBER}BI${env.BUILD_ID}/g\" web.yaml"
 						sh "kubectl apply -f  web.yaml -n ${namespace}"
-						//sh "kubectl set image deployments/web-deployment petreoctav/licenta:webimage=petreoctav/licenta:webimageBN${env.BUILD_NUMBER} -n ${namespace}"
 					}
 					sh "sleep 60"
 				}

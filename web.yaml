@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
       - name: web-container
-        image: petreoctav/licenta:webimageBN
+        image: petreoctav/licenta:webimageCTX
         ports:
         - containerPort: 80
         readinessProbe:
@@ -77,5 +77,3 @@ data:
   MYSQL_USER: "test"
   MYSQL_PASS: "test"
   MYSQL_DB: "planetickets"
-
-
