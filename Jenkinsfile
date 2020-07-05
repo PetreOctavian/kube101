@@ -1,5 +1,5 @@
 def prepareNamespace (namespace) {
-	echo "Deleating namespace ${namespace} and it's content if needed"
+	echo "Deleting namespace ${namespace} and it's content if needed"
 	sh "kubectl delete all --all -n ${namespace} --ignore-not-found"
     	sh "kubectl delete ns ${namespace} --ignore-not-found"
 	echo "Creating namespace ${namespace}"
@@ -7,7 +7,7 @@ def prepareNamespace (namespace) {
 }
 
 def clearNamespace (namespace) {
-    echo "Deleating namespace ${namespace}"
+    echo "Deleting namespace ${namespace}"
 	sh "kubectl delete all --all -n ${namespace} --ignore-not-found"
     	sh "kubectl delete ns ${namespace} --ignore-not-found"
 }
