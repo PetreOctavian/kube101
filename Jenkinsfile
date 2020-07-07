@@ -156,7 +156,7 @@ pipeline {
 						sh "kubectl apply -f  db.yaml -n ${namespace}"
 						sh "kubectl apply -f  web.yaml -n ${namespace}"
 					}
-					sh "sleep 60"
+					sh "sleep 45"
 				}
 			}
 		}
@@ -221,7 +221,7 @@ pipeline {
 						sh "kubectl apply -f  db.yaml -n ${namespace}"
 						sh "kubectl apply -f  web.yaml -n ${namespace}"
 					}
-					sh "sleep 60"
+					sh "sleep 45"
 				}
 			}
 		}
