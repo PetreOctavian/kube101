@@ -103,7 +103,7 @@ pipeline {
                					WEB.push()
                					DB.push()
               				}
-					sh "sleep 15"
+					sh "sleep 20"
 				}
 			}
 		}
@@ -120,7 +120,7 @@ pipeline {
 						sh "cat web.yaml"
 						sh "kubectl apply -f  web.yaml -n ${namespace}"
 					}
-					sh "sleep 25"
+					sh "sleep 35"
 				}
 			}
 		}
@@ -165,7 +165,7 @@ pipeline {
 						sh "cat web.yaml"
 						sh "kubectl apply -f  web.yaml -n ${namespace}"
 					}
-					sh "sleep 25"
+					sh "sleep 35"
 				}
 			}
 		}
@@ -234,7 +234,7 @@ pipeline {
 						sh "cat web.yaml"
 						sh "kubectl apply -f  web.yaml -n ${namespace}"
 					}
-					sh "sleep 25"
+					sh "sleep 35"
 				}
 			}
 		}
