@@ -69,7 +69,7 @@
 
 
 	<div class="jumbotron mx-3 my-3" style="background-color: #73CAE5;">
-		<h1 class="text-center">Welcome to <kbd>WINGFREE 2.2</kbd> </h1>		
+		<h1 class="text-center">Welcome to <kbd>WINGFREE 2.3</kbd> </h1>		
 	</div>
 
 
