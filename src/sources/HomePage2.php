@@ -31,46 +31,8 @@
 
 <body class="bg-dark">
 
-	<!--<nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
-		<a class="navbar-brand" href="HomePage2.html">
-			<img class=" logo_img" src="../images/avatar2.png" alt="logo" >
-		</a>
-		<a class="navbar-brand" href="../sources/ShoppingCart.html">
-			<img class=" logo_img" src="../images/avatar3.jpg" alt="logo" >
-		</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse ml-auto" id="navbarNav">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item mx-sm-2">
-					<a class="nav-link" href="#">Booking</a>
-				</li>
-				<li class="nav-item mx-sm-2">
-					<a class="nav-link" href="AllFlights.html">Route map</a>
-				</li>
-				<li class="nav-item mx-sm-2">
-					<a class="nav-link" href="Destinations.html">Destinations</a>
-				</li>
-				<li class="nav-item mx-sm-2">
-					<a class="nav-link" href="LoginPage.html">Sign in</a>
-				</li>
-				<li class="nav-item mx-sm-2">
-					<a class="nav-link" href="EditProfilePage.html">Edit profile</a>
-				</li>
-			</ul>
-
-			<form class="form-inline my-2 my-lg-0 ">
-				<input class="form-control mr-sm-2 input-sm" type="search" placeholder="Search" aria-label="Search">
-				<button class="btn btn-outline-warning my-2 my-sm-0 btn-sm" type="submit">Search</button>
-			</form>
-			
-		</div>
-	</nav>-->
 
 	<?php //taking information
-
-	// ID  username  password email  first name  last name  adress  telephone  user type  validation status  connection status
 
 	include_once '../phps/SQL_Connection.php';
 	session_start();
@@ -97,21 +59,6 @@
 		$GLOBALS['hp_user_type'] = $final['user type'];
 		$GLOBALS['hp_validation_status'] = $final['validation status'];
 		$GLOBALS['hp_connection_status'] = $final['connection status'];
-		///
-		//check after login validation
-		/*$sql_check_for_navbar= "SELECT * from logindata where `username` = '$t1' and `password` = '$t2' and `connection status` = 'online'";
-		$query_check_for_navbar = mysqli_query($conn,$sql_check_for_navbar);
-		if(!$query_check_for_navbar)
-		{
-			exit("Cannot verify user status with data base for navbar");
-		}
-		$content = mysqli_fetch_assoc($query_check_for_navbar);
-		$fn = $content["first name"];
-		$ln = $content["last name"];
-		$ut = $content["user type"];
-		$cs = $content["connection status"];*/
-
-		//mysqli_close($conn);
 		
 	}
 	
@@ -124,7 +71,7 @@
 
 
 	<div class="jumbotron mx-3 my-3" style="background-color: #73CAE5;">
-		<h1 class="text-center">Welcome to <kbd>WINGFREE</kbd> </h1>		
+		<h1 class="text-center">Welcome to <kbd>WINGFREE 2.0</kbd> </h1>		
 	</div>
 
 
