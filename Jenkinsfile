@@ -113,9 +113,9 @@ pipeline {
 					namespace = 'dev'
 					withKubeConfig([credentialsId: 'kubeconfig']) {
 						prepareNamespace (namespace)
-						sh "sed -i \"s/CTX/BI${env.BUILD_ID}NN${env.NODE_NAME}U${env.User}/g\" db.yaml"
+						sh "sed -i \"s/CTX/BI${env.BUILD_ID}NN${env.NODE_NAME}U${env.USER}/g\" db.yaml"
 						sh "kubectl apply -f  db.yaml -n ${namespace}"
-						sh "sed -i \"s/CTX/BI${env.BUILD_ID}NN${env.NODE_NAME}U${env.User}/g\" web.yaml"
+						sh "sed -i \"s/CTX/BI${env.BUILD_ID}NN${env.NODE_NAME}U${env.USER}/g\" web.yaml"
 						sh "sed -i \"s/PORTNR/${env.DEV_PORT}/g\" web.yaml"
 						sh "kubectl apply -f  web.yaml -n ${namespace}"
 					}
@@ -160,7 +160,7 @@ pipeline {
 						sh "sed -i \"s/CTX/BI${env.BUILD_ID}NN${env.NODE_NAME}U${env.USER}/g\" db.yaml"
 						sh "kubectl apply -f  db.yaml -n ${namespace}"
 						sh "sed -i \"s/CTX/BI${env.BUILD_ID}NN${env.NODE_NAME}U${env.USER}/g\" web.yaml"
-                                             	sh "sed -i \"s/PORTNR/${env.PREPROD_PORT}/g\" web.yaml"
+						sh "sed -i \"s/PORTNR/${env.PREPROD_PORT}/g\" web.yaml"
 						sh "kubectl apply -f  web.yaml -n ${namespace}"
 					}
 					sh "sleep 25"
@@ -225,9 +225,9 @@ pipeline {
 					namespace = 'prod'
 					withKubeConfig([credentialsId: 'kubeconfig']) {
 						prepareNamespace (namespace)
-						sh "sed -i \"s/CTX/JN${env.JOB_NAME}BI${env.BUILD_ID}NN${env.NODE_NAME}/g\" db.yaml"
+						sh "sed -i \"s/CTX/BI${env.BUILD_ID}NN${env.NODE_NAME}U${env.USER}/g\" db.yaml"
 						sh "kubectl apply -f  db.yaml -n ${namespace}"
-						sh "sed -i \"s/CTX/JN${env.JOB_NAME}BI${env.BUILD_ID}NN${env.NODE_NAME}/g\" web.yaml"
+						sh "sed -i \"s/CTX/BI${env.BUILD_ID}NN${env.NODE_NAME}U${env.USER}/g\" web.yaml"
 						sh "sed -i \"s/PORTNR/${env.PROD_PORT}/g\" web.yaml"
 						sh "kubectl apply -f  web.yaml -n ${namespace}"
 					}
