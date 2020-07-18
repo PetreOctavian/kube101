@@ -32,13 +32,12 @@
 <body class="bg-dark">
 
 
-	<?php //taking information
+	<?php 
 
 	include_once '../phps/SQL_Connection.php';
 	session_start();
 	if(isset($_SESSION['connected_user_ID'])){
 
-		//minunatia asta putem s-o punem si in homepage 
 		$id = $_SESSION['connected_user_ID'];
 		$sql_get_connected_user_data_from_ID = "SELECT * from logindata where `ID` = '$id'";
         $query_get_connected_user_data_from_ID = mysqli_query($conn,$sql_get_connected_user_data_from_ID);
@@ -48,7 +47,6 @@
 		}
 		$final = mysqli_fetch_assoc($query_get_connected_user_data_from_ID);
 
-		//prepare all variable from data base for hp page ( not all will be used ) not actually good practice
 		$GLOBALS['hp_username'] = $final['username'];
 		$GLOBALS['hp_password'] = $final['password'];
 		$GLOBALS['hp_email'] = $final['email'];
@@ -71,7 +69,7 @@
 
 
 	<div class="jumbotron mx-3 my-3" style="background-color: #73CAE5;">
-		<h1 class="text-center">Welcome to <kbd>WINGFREE 2.0</kbd> </h1>		
+		<h1 class="text-center">Welcome to <kbd>WINGFREE 2.1</kbd> </h1>		
 	</div>
 
 
