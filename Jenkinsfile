@@ -57,6 +57,9 @@ pipeline {
 	environment {
     		registry = "petreoctav/licenta"
     		registryCredential = 'dockerhub'
+    		DEV_PORT = "30008"
+    		PREPROD_PORT = "30009"
+    		PROD_PORT = "30010"
   	}
 
   	parameters {
@@ -75,8 +78,8 @@ pipeline {
     		stage('Building images') {
         		steps{
           			script {
-					WEB = docker.build("${env.registry}:webimageBN${env.BUILD_NUMBER}BI${env.BUILD_ID}")
-					DB = docker.build("${env.registry}:dbimageBN${env.BUILD_NUMBER}BI${env.BUILD_ID}","./dockerfile_aux/db")
+					WEB = docker.build("${env.registry}:webimageJN${env.JOB_NAME}BI${env.BUILD_ID}NN${env.NODE_NAME}")
+					DB = docker.build("${env.registry}:dbimageJN${env.JOB_NAME}BI${env.BUILD_ID}NN${env.NODE_NAME}","./dockerfile_aux/db")
 				}
 			}
 		}
@@ -100,7 +103,7 @@ pipeline {
                					WEB.push()
                					DB.push()
               				}
-					sh "sleep 45"
+					sh "sleep 15"
 				}
 			}
 		}
@@ -110,12 +113,13 @@ pipeline {
 					namespace = 'dev'
 					withKubeConfig([credentialsId: 'kubeconfig']) {
 						prepareNamespace (namespace)
-						sh "sed -i \"s/CTX/BN${env.BUILD_NUMBER}BI${env.BUILD_ID}/g\" db.yaml"
+						sh "sed -i \"s/CTX/JN${env.JOB_NAME}BI${env.BUILD_ID}NN${env.NODE_NAME}/g\" db.yaml"
 						sh "kubectl apply -f  db.yaml -n ${namespace}"
-						sh "sed -i \"s/CTX/BN${env.BUILD_NUMBER}BI${env.BUILD_ID}/g\" web.yaml"
+						sh "sed -i \"s/CTX/JN${env.JOB_NAME}BI${env.BUILD_ID}NN${env.NODE_NAME}/g\" web.yaml"
+						sh "sed -i \"s/PORTNR/${env.DEV_PORT}/g\" web.yaml"
 						sh "kubectl apply -f  web.yaml -n ${namespace}"
 					}
-					sh "sleep 60"
+					sh "sleep 25"
 				}
 			}
 		}
@@ -138,7 +142,7 @@ pipeline {
                 		}
 			}
             	}
-        	/*stage('Cleanup dev') {
+        	stage('Cleanup dev') {
             		steps {
                 		script {
                     			withKubeConfig([credentialsId: 'kubeconfig']) {
@@ -153,10 +157,13 @@ pipeline {
 					namespace = 'preprod'
 					withKubeConfig([credentialsId: 'kubeconfig']) {
 						prepareNamespace (namespace)
+						sh "sed -i \"s/CTX/JN${env.JOB_NAME}BI${env.BUILD_ID}NN${env.NODE_NAME}/g\" db.yaml"
 						sh "kubectl apply -f  db.yaml -n ${namespace}"
+						sh "sed -i \"s/CTX/JN${env.JOB_NAME}BI${env.BUILD_ID}NN${env.NODE_NAME}/g\" web.yaml"
+                                             	sh "sed -i \"s/PORTNR/${env.PREPROD_PORT}/g\" web.yaml"
 						sh "kubectl apply -f  web.yaml -n ${namespace}"
 					}
-					sh "sleep 45"
+					sh "sleep 25"
 				}
 			}
 		}
@@ -218,10 +225,13 @@ pipeline {
 					namespace = 'prod'
 					withKubeConfig([credentialsId: 'kubeconfig']) {
 						prepareNamespace (namespace)
+						sh "sed -i \"s/CTX/JN${env.JOB_NAME}BI${env.BUILD_ID}NN${env.NODE_NAME}/g\" db.yaml"
 						sh "kubectl apply -f  db.yaml -n ${namespace}"
+						sh "sed -i \"s/CTX/JN${env.JOB_NAME}BI${env.BUILD_ID}NN${env.NODE_NAME}/g\" web.yaml"
+						sh "sed -i \"s/PORTNR/${env.PROD_PORT}/g\" web.yaml"
 						sh "kubectl apply -f  web.yaml -n ${namespace}"
 					}
-					sh "sleep 45"
+					sh "sleep 25"
 				}
 			}
 		}
@@ -246,6 +256,6 @@ pipeline {
                     			}
                 		}
             		}
-		}*/
+		}
 	}
 }
