@@ -78,8 +78,8 @@ pipeline {
     		stage('Building images') {
         		steps{
           			script {
-					WEB = docker.build("${env.registry}:webimageJN${env.JOB_NAME}BI${env.BUILD_ID}NN${env.NODE_NAME}")
-					DB = docker.build("${env.registry}:dbimageJN${env.JOB_NAME}BI${env.BUILD_ID}NN${env.NODE_NAME}","./dockerfile_aux/db")
+					WEB = docker.build("${env.registry}:webimageBI${env.BUILD_ID}NN${env.NODE_NAME}U${env.User}")
+					DB = docker.build("${env.registry}:dbimageBI${env.BUILD_ID}NN${env.NODE_NAME}U${env.User}","./dockerfile_aux/db")
 				}
 			}
 		}
@@ -113,9 +113,9 @@ pipeline {
 					namespace = 'dev'
 					withKubeConfig([credentialsId: 'kubeconfig']) {
 						prepareNamespace (namespace)
-						sh "sed -i \"s/CTX/JN${env.JOB_NAME}BI${env.BUILD_ID}NN${env.NODE_NAME}/g\" db.yaml"
+						sh "sed -i \"s/CTX/BI${env.BUILD_ID}NN${env.NODE_NAME}U${env.User}/g\" db.yaml"
 						sh "kubectl apply -f  db.yaml -n ${namespace}"
-						sh "sed -i \"s/CTX/JN${env.JOB_NAME}BI${env.BUILD_ID}NN${env.NODE_NAME}/g\" web.yaml"
+						sh "sed -i \"s/CTX/BI${env.BUILD_ID}NN${env.NODE_NAME}U${env.User}/g\" web.yaml"
 						sh "sed -i \"s/PORTNR/${env.DEV_PORT}/g\" web.yaml"
 						sh "kubectl apply -f  web.yaml -n ${namespace}"
 					}
