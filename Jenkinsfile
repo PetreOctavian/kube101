@@ -117,6 +117,7 @@ pipeline {
 						sh "kubectl apply -f  db.yaml -n ${namespace}"
 						sh "sed -i \"s/CTX/BI${env.BUILD_ID}NN${env.NODE_NAME}U${env.USER}/g\" web.yaml"
 						sh "sed -i \"s/PORTNR/${env.DEV_PORT}/g\" web.yaml"
+						sh "cat web.yaml"
 						sh "kubectl apply -f  web.yaml -n ${namespace}"
 					}
 					sh "sleep 25"
@@ -161,6 +162,7 @@ pipeline {
 						sh "kubectl apply -f  db.yaml -n ${namespace}"
 						//sh "sed -i \"s/CTX/BI${env.BUILD_ID}NN${env.NODE_NAME}U${env.USER}/g\" web.yaml"
 						sh "sed -i \"s/${env.PROD_PORT}/${env.PREPROD_PORT}/g\" web.yaml"
+						sh "cat web.yaml"
 						sh "kubectl apply -f  web.yaml -n ${namespace}"
 					}
 					sh "sleep 25"
@@ -229,6 +231,7 @@ pipeline {
 						sh "kubectl apply -f  db.yaml -n ${namespace}"
 						//sh "sed -i \"s/CTX/BI${env.BUILD_ID}NN${env.NODE_NAME}U${env.USER}/g\" web.yaml"
 						sh "sed -i \"s/${env.PREPROD_DEV}/${env.PROD_PORT}/g\" web.yaml"
+						sh "cat web.yaml"
 						sh "kubectl apply -f  web.yaml -n ${namespace}"
 					}
 					sh "sleep 25"
