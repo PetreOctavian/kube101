@@ -72,6 +72,7 @@ pipeline {
   	stages {
 		stage('Cloning our Git') {
       			steps {
+				echo ${env.DEV_PORT}
             			git 'https://github.com/PetreOctavian/kube101.git'
       			}
     		}
