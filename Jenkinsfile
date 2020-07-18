@@ -138,7 +138,7 @@ pipeline {
                 		}
 			}
             	}
-        	stage('Cleanup dev') {
+        	/*stage('Cleanup dev') {
             		steps {
                 		script {
                     			withKubeConfig([credentialsId: 'kubeconfig']) {
@@ -246,6 +246,6 @@ pipeline {
                     			}
                 		}
             		}
-		}
+		}*/
 	}
 }
